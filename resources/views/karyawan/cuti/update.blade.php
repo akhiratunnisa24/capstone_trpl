@@ -62,7 +62,7 @@
                                                 <div class="form-group">
                                                     <label for="tgl_mulai" class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcutis()) value="{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autocloses" name="tgl_mulai"  autocomplete="off" rows="10" readonly>
+                                                        <input type="text" class="form-control" onchange=(jumlahcutis()) value="{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autocloses" name="tgl_mulai"  autocomplete="off" rows="10" required>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -74,7 +74,7 @@
                                                 <div class="form-group">
                                                     <label for="tgl_selesai" class="form-label">Sampai</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcutis()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autocloset" name="tgl_selesai"  autocomplete="off" rows="10" readonly>
+                                                        <input type="text" class="form-control" onchange=(jumlahcutis()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autocloset" name="tgl_selesai"  autocomplete="off" rows="10" required>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -84,7 +84,7 @@
 
                                     <div class="form-group col-sm">
                                         <label for="keperluan" class="col-form-label">Keterangan</label>
-                                        <textarea class="form-control" name="keperluan" id="keperluan" rows="5" placeholder="Masukkan keterangan" autocomplete="off">{{$data->keperluan}}</textarea>
+                                        <textarea class="form-control" name="keperluan" id="keperluan" rows="5" placeholder="Masukkan keterangan" autocomplete="off" required>{{$data->keperluan}}</textarea>
                                         {{-- <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keterangan" autocomplete="off" required> --}}
                                     </div>
                                     <div class="row">

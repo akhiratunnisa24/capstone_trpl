@@ -14,14 +14,14 @@ class SettingabsensiController extends Controller
     public function setting()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;        
+        $role = Auth::user()->role;
         if ($role == 1 || $role == 2) {
             $settingabsensi = Settingabsensi::where('partner',Auth::user()->partner)->get();
             return view('admin.settingabsensi.setting',compact('settingabsensi','row'));
         }
         else
         {
-           return redirect()->back(); 
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -53,14 +53,14 @@ class SettingabsensiController extends Controller
             $existingData = Settingabsensi::where('partner', $data['partner'])
                 ->where('sanksi_terlambat', $data['sanksi_terlambat'])
                 ->first();
-            
+
             if ($existingData) {
                 // Jika data sudah ada, berikan pesan error dan kembalikan ke halaman sebelumnya
-                return redirect()->back()->with('pesa', 'Data Setting Absensi sudah ada.');
+                return redirect()->back()->with('error', 'Data Setting Absensi sudah ada.');
             }
 
             Settingabsensi::create($data);
-            return redirect()->back()->with('pesan', 'Data Setting Absensi berhasil disimpan.');
+            return redirect()->back()->with('success', 'Data Setting Absensi berhasil disimpan.');
         }
         elseif($tipeAbsensi == 'Tidak Masuk')
         {
@@ -87,14 +87,14 @@ class SettingabsensiController extends Controller
 
             if ($existingData) {
                 // Jika data sudah ada, berikan pesan error dan kembalikan ke halaman sebelumnya
-                return redirect()->back()->with('pesa', 'Data Setting Absensi sudah ada.');
+                return redirect()->back()->with('error', 'Data Setting Absensi sudah ada.');
             }
             Settingabsensi::create($data);
-            return redirect()->back()->with('pesan', 'Data Setting Absensi berhasil disimpan.');
+            return redirect()->back()->with('success', 'Data Setting Absensi berhasil disimpan.');
         }
         else{
-            return redirect()->back();
-        } 
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
+        }
     }
 
 
@@ -103,6 +103,6 @@ class SettingabsensiController extends Controller
         $settingabsensi = Settingabsensi::find($id);
         $settingabsensi->update($request->all());
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil diupdate');
     }
 }

@@ -39,7 +39,7 @@ class AbsensisController extends Controller
     //         $file = $request->file('file');
     //         $import = new AbsensisImport();
     //         Excel::import($import, $file);
-            
+
     //         $jumlahdatadiimport = $import->getJumlahDataDiimport();//SUDAH BENAR 12
     //         $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
     //         $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
@@ -49,15 +49,15 @@ class AbsensisController extends Controller
     //         "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
     //         "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
     //         "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
-           
+
     //         // dd($pesan);
     //         $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
     //         $pesan = nl2br(html_entity_decode($pesan));
-    //         return redirect()->back()->with('pesan', $pesan);  
-                
+    //         return redirect()->back()->with('success', $pesan);
+
     //     }catch (\Throwable $th) {
     //         // Tangani jika terjadi kesalahan
-    //         return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
+    //         return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimport data dari Excel.');
     //     }
     // }
 
@@ -88,21 +88,21 @@ class AbsensisController extends Controller
             $jumlahdatadiimport = $import->getJumlahDataDiimport();//SUDAH BENAR 12
             $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
             $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
-            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 
+            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); //
 
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
             "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
             "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
             "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
-           
+
             // dd($pesan);
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
             $pesan = nl2br(html_entity_decode($pesan));
-            return redirect()->back()->with('pesan', $pesan);  
-                
+            return redirect()->back()->with('success', $pesan);
+
         // }catch (\Throwable $th) {
         //     // Tangani jika terjadi kesalahan
-        //     return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
+        //     return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimport data dari Excel.');
         // }
     }
 
@@ -128,11 +128,11 @@ class AbsensisController extends Controller
 
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
             $pesan = nl2br(html_entity_decode($pesan));
-            return redirect()->back()->with('pesan', $pesan);
+            return redirect()->back()->with('success', $pesan);
 
         } catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari CSV.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimport data dari CSV.');
         }
     }
 }

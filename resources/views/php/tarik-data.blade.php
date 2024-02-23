@@ -53,7 +53,7 @@
                                         <label for="ip">IP Address:</label>
                                         <input type="text" name="ip" id="ip" value="{{ $IP }}" class="form-control" size="15">
                                     </div>
-                    
+
                                     <div class="form-group col-md-5 m-t-5">
                                         <label for="key">Comm Key:</label>
                                         <input type="text" name="key" id="key" class="form-control" size="5" value="{{ $Key }}">
@@ -66,7 +66,7 @@
 
                             {{-- @if ($IP != "")  --}}
                             @if(isset($logData))
-                                
+
                                 <table  id="datatable-responsive40" class="table table-striped table-bordered m-t-20" cellspacing="0" width="100%">
                                     <thead>
                                         <tr align="center">
@@ -114,18 +114,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
-    @if(Session::has('pesan'))
+    @if(Session::has('success'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat","{{ Session::get('success')}}", 'success', {
                 button:true,
                 button:"OK",
             });
         </script>
     @endif
 
-    @if(Session::has('gagal'))
+    @if(Session::has('error'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('gagal')}}", 'error', {
+            swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
                 button:true,
                 button:"OK",
             });

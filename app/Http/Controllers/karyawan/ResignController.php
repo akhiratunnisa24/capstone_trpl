@@ -213,7 +213,7 @@ class ResignController extends Controller
     public function delete($id)
         {
             Resign::destroy($id);
-            return redirect()->back();
+            return redirect()->back()->with('success','Data berhasil dihapus');
 
         }
 }

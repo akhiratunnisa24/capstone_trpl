@@ -48,7 +48,7 @@ class DepartemenController extends Controller
         }
         else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -71,7 +71,7 @@ class DepartemenController extends Controller
 
         if ($departemen) {
             // Jika data departemen sudah ada, kembalikan pesan bahwa data sudah ada
-            return redirect()->back()->with('pesa', 'Data Divisi ' . $nama_departemen . ' sudah ada !');
+            return redirect()->back()->with('error', 'Data Divisi ' . $nama_departemen . ' sudah ada !');
         } else {
             // Jika data departemen belum ada, simpan data baru
             $departemen = new Departemen;
@@ -79,7 +79,7 @@ class DepartemenController extends Controller
             $departemen->partner = $partner;
             $departemen->save();
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 
@@ -92,9 +92,9 @@ class DepartemenController extends Controller
             $departemen->nama_departemen = $request->nama_departemen;
             $departemen->update();
 
-            return redirect()->back()->with('pesan','Data berhasil diupdate !');
+            return redirect()->back()->with('success','Data berhasil diupdate !');
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -105,10 +105,10 @@ class DepartemenController extends Controller
         // Cek data ke tabel "karyawan"
         $karyawan = Karyawan::where('divisi', $departemen->id)->first();
         if ($karyawan !== null) {
-            return redirect()->back()->with('pesa', 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+            return redirect()->back()->with('error', 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.');
         } else {
             $departemen->delete();
-            return redirect()->back()->with('pesan', 'Data Divisi berhasil dihapus');
+            return redirect()->back()->with('success', 'Data Divisi berhasil dihapus');
         }
     }
 }

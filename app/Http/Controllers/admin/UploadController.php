@@ -27,8 +27,8 @@ class UploadController extends Controller
             $karyawan = Karyawan::all();
             $karyawan2 = karyawan::findOrFail($id);
             $file = File::where('id_pegawai', $id)->first();
-            
-            
+
+
 
             // // ambil data karyawan yang sudah upload file digital
             // $karyawansudah = DB::table('file')->pluck('id_pegawai');
@@ -45,19 +45,18 @@ class UploadController extends Controller
             return view('admin.karyawan.createUpload', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
     public function store(Request $request)
     {
 
-
         $idPegawai = $request->post('karyawan');
         // Cek apakah id_pegawai sudah ada dalam database
         if (DB::table('file')->where('id_pegawai', $idPegawai)->exists()) {
 
-            return redirect()->back()->with('alert', 'File sudah ada, agar tidak ada duplikasi data silahkan isi pada tombol Edit Data !');
+            return redirect()->back()->with('error', 'File sudah ada, agar tidak ada duplikasi data silahkan isi pada tombol Edit Data !');
         } else {
 
             $file = array(
@@ -245,10 +244,10 @@ class UploadController extends Controller
             }
 
             File::insert($file);
-            return redirect()->back()->with('alert2', 'File berhasil tersimpan !');
+            return redirect()->back()->with('success', 'File berhasil tersimpan !');
         }
 
         }
 
-       
+
 }

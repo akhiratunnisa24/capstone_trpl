@@ -52,7 +52,7 @@ class AlokasicutiController extends Controller
             return view('admin.alokasicuti.index', compact('alokasicuti','row'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -146,7 +146,7 @@ class AlokasicutiController extends Controller
             $alokasicuti->partner      = $request->partner;
             // dd($alokasicuti);
             $alokasicuti->save();
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan !');
+            return redirect()->back()->with('success', 'Data berhasil disimpan !');
         } else {
             $validate = $request->validate([
                 'id_karyawan'  => 'required',
@@ -170,7 +170,7 @@ class AlokasicutiController extends Controller
             // dd($alokasicuti);
             $alokasicuti->save();
             // return redirect()->back()->withInput();
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan !');
+            return redirect()->back()->with('success', 'Data berhasil disimpan !');
         }
     }
 
@@ -261,7 +261,7 @@ class AlokasicutiController extends Controller
         $alokasicuti = Alokasicuti::find($id);
         $alokasicuti->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 
     public function importexcel(Request $request)

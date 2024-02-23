@@ -29,7 +29,7 @@ class SettingController extends Controller
             return view('admin.datamaster.user.dashboardAdmin', compact('output',));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -56,7 +56,7 @@ class SettingController extends Controller
         }
         else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -93,7 +93,7 @@ class SettingController extends Controller
         }
         else {
 
-                return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -103,7 +103,7 @@ class SettingController extends Controller
 
         $user->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data User berhasil dihapus');
         // return redirect('karyawan');
     }
 
@@ -118,7 +118,7 @@ class SettingController extends Controller
             return view('admin.datamaster.role.index', compact('user','row'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function storerole(Request $request)
@@ -131,10 +131,10 @@ class SettingController extends Controller
             $user->role = $request->role;
             $user->save();
 
-            return redirect()->back();
+            return redirect()->back()->with('success','Role berhasil ditambahkan');
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function editrole(Request $request, $id)
@@ -155,7 +155,7 @@ class SettingController extends Controller
 
         $role->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Role berhasil dihapus');
         // return redirect('karyawan');
     }
 

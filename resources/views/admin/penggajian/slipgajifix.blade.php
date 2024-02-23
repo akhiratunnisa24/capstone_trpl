@@ -4,7 +4,7 @@
         .alert-info1
         {
             color: #000;
-            background-color: rgba(24, 186, 226, 0.2); 
+            background-color: rgba(24, 186, 226, 0.2);
         }
 
         .garis {
@@ -90,7 +90,7 @@
                                                     </div>
 
                                                     <div class="col-md-6 m-t-10">
-                                            
+
                                                         <div class="form-group col-sm">
                                                             <div class="row">
                                                                 <label class="form-label col-sm-3 text-end">Jabatan</label>
@@ -137,7 +137,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                   
+
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="col-md-6">
@@ -177,7 +177,7 @@
                                                                                 <td>{{ number_format($detail->jumlah,0) }}</td>
                                                                                 <td>{{ number_format($detail->total, 0, ',', '.')}}</td>
                                                                             </tr>
-                                                                           
+
                                                                         @endif
                                                                     @endforeach
                                                                     @foreach($detailgaji as $detail)
@@ -212,7 +212,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                
+
                                                                 @if($detailgaji !== null)
                                                                     @foreach($detailgaji as $detail)
                                                                         @if($detail->benefit->id_kategori === 5 && $detail->benefit->dibayarkan_oleh == "Karyawan" || $detail->benefit->id_kategori === 6)
@@ -281,7 +281,7 @@
                                                             @endforeach
                                                         </table>
                                                     </div>
-                                                </div>                                                
+                                                </div>
                                         </div>
                                     </div>
                                     <input type="hidden" class="form-control" name="id_slip" value ="{{$slipgaji->id}}">
@@ -293,7 +293,7 @@
                                         <a href="/slipgaji-karyawan" class="btn btn-sm btn-danger" type="button">Kembali  <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
-                              
+
                             </div>
                         </div>
                     </div>
@@ -311,18 +311,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
 
-    @if (Session::has('pesan'))
+    @if (Session::has('success'))
         <script>
-            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+            swal("Selamat", "{{ Session::get('success') }}", 'success', {
                 button: true,
                 button: "OK",
             });
         </script>
     @endif
 
-    @if (Session::has('pesa'))
+    @if (Session::has('error'))
         <script>
-            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+            swal("Mohon Maaf", "{{ Session::get('error') }}", 'error', {
                 button: true,
                 button: "OK",
             });

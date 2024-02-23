@@ -37,7 +37,7 @@ class PartnerController extends Controller
             return view('superadmin.partner.index', compact('partner', 'row'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -55,14 +55,14 @@ class PartnerController extends Controller
 
         if ($partner) {
             // Jika data partner sudah ada, kembalikan pesan bahwa data sudah ada
-            return redirect()->back()->with('pesa', 'Data Partner ' . $nama_partner . ' sudah ada !');
+            return redirect()->back()->with('error', 'Data Partner ' . $nama_partner . ' sudah ada !');
         } else {
             // Jika data Partner belum ada, simpan data baru
             $partner = new Partner;
             $partner->nama_partner = $nama_partner;
             $partner->save();
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 
@@ -75,9 +75,9 @@ class PartnerController extends Controller
             $partner->nama_partner = $request->nama_partner;
             $partner->update();
 
-            return redirect()->back()->with('pesan','Data berhasil diupdate !');
+            return redirect()->back()->with('success','Data berhasil diupdate !');
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -88,10 +88,10 @@ class PartnerController extends Controller
     //     // Cek data ke tabel "karyawan"
     //     $karyawan = Karyawan::where('Partner', $partner->id)->first();
     //     if ($karyawan !== null) {
-    //         return redirect()->back()->with('pesa', 'Partner tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+    //         return redirect()->back()->with('error', 'Partner tidak dapat dihapus karena digunakan dalam tabel karyawan.');
     //     } else {
     //         $partner->delete();
-    //         return redirect()->back()->with('pesan', 'Data Partner berhasil dihapus');
+    //         return redirect()->back()->with('success', 'Data Partner berhasil dihapus');
     //     }
     // }
 }

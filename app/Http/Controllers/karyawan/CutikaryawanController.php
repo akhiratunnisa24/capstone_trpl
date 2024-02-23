@@ -145,7 +145,7 @@ class CutikaryawanController extends Controller
 
         if($existingCuti)
         {
-            return redirect()->back()->with('pesa', 'Anda sudah mengajukan cuti !');
+            return redirect()->back()->with('error', 'Anda sudah mengajukan cuti !');
         }
         else
         {
@@ -273,7 +273,7 @@ class CutikaryawanController extends Controller
 
             Mail::to($tujuan)->send(new CutiNotification($data));
 
-            return redirect('cuti-karyawan')->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
+            return redirect('cuti-karyawan')->with('success', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
         }
     }
@@ -345,7 +345,7 @@ class CutikaryawanController extends Controller
         //     // proses jika data atasan tidak ada / email tidak ada
         // }
         return redirect()->back()
-            ->with('pesan', 'Email Notifikasi Pembatalan Permohonan Cuti Berhasil Dikirim');
+            ->with('success', 'Email Notifikasi Pembatalan Permohonan Cuti Berhasil Dikirim');
     }
 
     public function update(Request $request, $id)
@@ -465,7 +465,7 @@ class CutikaryawanController extends Controller
         // dd($data);
         Mail::to($tujuan)->send(new PerubahanNotification($data));
 
-        return redirect()->back()->with('pesan','Email Notifikasi Perubahan Data Permohonan Cuti Berhasil Dikirim');
+        return redirect()->back()->with('success','Email Notifikasi Perubahan Data Permohonan Cuti Berhasil Dikirim');
     }
 }
  // $tujuan = 'andiny700@gmail.com';

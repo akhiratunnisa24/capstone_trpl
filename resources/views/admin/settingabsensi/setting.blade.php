@@ -99,18 +99,18 @@
         </div> <!-- container -->
     </div> <!-- content -->
 
-    @if (Session::has('pesan'))
+    @if (Session::has('success'))
         <script>
-            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+            swal("Selamat", "{{ Session::get('success') }}", 'success', {
                 button: true,
                 button: "OK",
             });
         </script>
     @endif
 
-    @if (Session::has('pesa'))
+    @if (Session::has('error'))
         <script>
-            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+            swal("Mohon Maaf", "{{ Session::get('error') }}", 'error', {
                 button: true,
                 button: "OK",
             });

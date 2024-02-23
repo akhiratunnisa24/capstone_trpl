@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class JeniscutiController extends Controller
 {
-    
+
     /**
      * Create a new controller instance.
      *
@@ -21,15 +21,15 @@ class JeniscutiController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;        
-        if ($role == 1 || $role == 2) 
+        $role = Auth::user()->role;
+        if ($role == 1 || $role == 2)
         {
             $type = $request->query('type', 1);
-            
+
             $jeniscuti = Jeniscuti::where('status','=',1)->where('partner',Auth::user()->partner)->get();
             $jenisizin = Jenisizin::all();
             return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row','role'));
@@ -37,14 +37,14 @@ class JeniscutiController extends Controller
         } elseif($role == 5)
         {
             $type = $request->query('type', 1);
-            
+
             $jeniscuti = Jeniscuti::where('status','=',1)->get();
             $jenisizin = Jenisizin::all();
             return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row','role'));
         }
         else {
-            
-            return redirect()->back(); 
+
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -66,12 +66,12 @@ class JeniscutiController extends Controller
 
         if ($jeniscuti) {
             // Jika data jenis cuti sudah ada, kembalikan pesan bahwa data sudah ada
-            return redirect()->back()->with('pesa', 'Data sudah ada !');
+            return redirect()->back()->with('error', 'Data sudah ada !');
         } else {
             // Jika data jenis cuti belum ada, simpan data baru
             $jeniscuti = Jeniscuti::create($request->all());
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 
@@ -86,8 +86,8 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::find($id);
         $jeniscuti->update($request->all());
 
-        return redirect()->back();
-        
+        return redirect()->back()->with('success','Data berhasil diupdate');
+
     }
 
     public function destroy($id)
@@ -95,6 +95,6 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::find($id);
         $jeniscuti->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 }

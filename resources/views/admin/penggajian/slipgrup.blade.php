@@ -64,17 +64,17 @@
                                                 <td>{{$data->karyawans->nama}}</td>
                                                 {{-- <td>{{$data->karyawans->nama_jabatan}}</td> --}}
                                                 <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
-                                                
+
                                                     @if($data->karyawans->divisi !== null && $data->karyawans->jabatan !== null && $data->karyawans->nama_bank !== null && $data->karyawans->nama_jabatan !== null  && $data->nama_bank !== null && $data->no_rekening !== null && $data->gaji_pokok !== null)
                                                         <td>Data Lengkap</td>
-                                                    @elseif($data->karyawans->divisi === null  || $data->karyawans->jabatan === null || $data->karyawans->nama_bank === null || $data->karyawans->nama_jabatan === null || $data->nama_bank === null || $data->no_rekening === null || $data->nama_bank === null && $data->no_rekening === null || $data->gaji_pokok === null)  
+                                                    @elseif($data->karyawans->divisi === null  || $data->karyawans->jabatan === null || $data->karyawans->nama_bank === null || $data->karyawans->nama_jabatan === null || $data->nama_bank === null || $data->no_rekening === null || $data->nama_bank === null && $data->no_rekening === null || $data->gaji_pokok === null)
                                                         <td style="color: rgb(240, 20, 20)">Lengkapi Data</td>
                                                     @endif
-                                                
+
                                                 <td>
                                                     <div  class="d-grid gap-2" role="group" aria-label="Basic example">
-                                                   
-                                                        @if($data->karyawans->divisi !== null  && $data->karyawans->jabatan !== null && $data->karyawans->nama_bank !== null && $data->karyawans->nama_jabatan !== null && $data->nama_bank !== null && $data->no_rekening !== null  && $data->gaji_pokok !== null)  
+
+                                                        @if($data->karyawans->divisi !== null  && $data->karyawans->jabatan !== null && $data->karyawans->nama_bank !== null && $data->karyawans->nama_jabatan !== null && $data->nama_bank !== null && $data->no_rekening !== null  && $data->gaji_pokok !== null)
                                                             <form method="POST" action="/slipgaji{{$data->id}}" class="col-md-1">
                                                             @csrf
                                                             @method('PUT')
@@ -85,7 +85,7 @@
                                                         @else
                                                              <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id_karyawan}}" style="width:35px;margin-left:10px"><i class="fa fa-edit"></i></a>
                                                         @endif
-                                                     
+
                                                   </div>
                                                 </td>
                                             </tr>
@@ -99,7 +99,7 @@
             </div>
         </div> <!-- End Row -->
     </div> <!-- container -->
-</div> 
+</div>
 @foreach($slipgaji as $data)
        @include('admin.penggajian.editrekening')
     @endforeach
@@ -111,19 +111,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
-    
-    @if(Session::has('pesan'))
+
+    @if(Session::has('success'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat","{{ Session::get('success')}}", 'success', {
                 button:true,
                 button:"OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if(Session::has('error'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
                 button:true,
                 button:"OK",
             });

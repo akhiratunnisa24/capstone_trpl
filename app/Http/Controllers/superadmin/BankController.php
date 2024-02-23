@@ -32,7 +32,7 @@ class BankController extends Controller
             return view('superadmin.bank.index', compact('bank', 'row'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -48,14 +48,14 @@ class BankController extends Controller
         })->first();
 
         if ($bank) {
-            return redirect()->back()->with('pesa', 'Data Bank ' . $nama_bank . ' sudah ada !');
+            return redirect()->back()->with('error', 'Data Bank ' . $nama_bank . ' sudah ada !');
         } else {
-           
+
             $data = [ 'nama_bank' => $nama_bank];
-            
+
             DB::table('bank')->insert($data);
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 
@@ -68,9 +68,9 @@ class BankController extends Controller
                 'nama_bank' => $request->nama_bank
             ]);
 
-            return redirect()->back()->with('pesan','Data berhasil diupdate !');
+            return redirect()->back()->with('success','Data berhasil diupdate !');
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -78,7 +78,7 @@ class BankController extends Controller
     {
         $bank = DB::table('bank')->find($id);
         $bank->delete();
-        return redirect()->back()->with('pesan', 'Data Bank berhasil dihapus');
+        return redirect()->back()->with('success', 'Data Bank berhasil dihapus');
     }
 
 }

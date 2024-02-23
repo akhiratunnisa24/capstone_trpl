@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class JenisizinController extends Controller
 {
-    
+
     /**
      * Create a new controller instance.
      *
@@ -18,7 +18,7 @@ class JenisizinController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
@@ -30,12 +30,12 @@ class JenisizinController extends Controller
 
         if ($jenisizin) {
             // Jika data jenis izin sudah ada, kembalikan pesan bahwa data sudah ada
-            return redirect()->route('kategori.index', ['type'=>2])->with('pesa','Data sudah ada !');
+            return redirect()->route('kategori.index', ['type'=>2])->with('error','Data sudah ada !');
         } else {
             // Jika data jenis izin belum ada, simpan data baru
             $jenisizin= Jenisizin::create($request->all());
 
-            return redirect()->route('kategori.index', ['type'=>2])->with('pesan','Data berhasil disimpan !');
+            return redirect()->route('kategori.index', ['type'=>2])->with('success','Data berhasil disimpan !');
         }
     }
 
@@ -51,7 +51,7 @@ class JenisizinController extends Controller
 
         $jenisizin->jenis_izin = $request->jenis_izin;
         $jenisizin->code = $request->code;
-        $jenisizin->save(); 
+        $jenisizin->save();
 
         return redirect()->route('kategori.index', ['type'=>2]);
     }

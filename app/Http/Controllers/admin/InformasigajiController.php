@@ -44,7 +44,7 @@ class InformasigajiController extends Controller
                 $informasigaji->gaji_pokok      = $data->gaji;
                 $informasigaji->partner         = $strukturgaji->partner;
                 $informasigaji->status          = 1;
-                
+
                 $informasigaji->save();
 
                 $informasigaji = Informasigaji::where('id_karyawan',$data->id)->first();
@@ -61,7 +61,7 @@ class InformasigajiController extends Controller
                             ->where('partner',$data->partner)
                             ->exists();
                     // dd($check);
-                   
+
                     if(!$check)
                     {
                         $nominal = null;
@@ -90,7 +90,7 @@ class InformasigajiController extends Controller
                                 $nominal      = $benefit->besaran;
                             }
                         }
-                               
+
                         $details[] = [
                             'id_karyawan'      =>$informasigaji->id_karyawan,
                             'id_informasigaji' =>$informasigaji->id,
@@ -101,7 +101,7 @@ class InformasigajiController extends Controller
                             'nominal'          =>$nominal,
                         ];
                     }
-                   
+
                 }
                 Detailinformasigaji::insert($details);
             }
@@ -122,7 +122,7 @@ class InformasigajiController extends Controller
                             ->where('partner',$data->partner)
                             ->exists();
                     // dd($check);
-                   
+
                     if(!$check)
                     {
                         $nominal = null;
@@ -151,7 +151,7 @@ class InformasigajiController extends Controller
                                 $nominal      = $benefit->besaran;
                             }
                         }
-                               
+
                         $details[] = [
                             'id_karyawan'      =>$informasigaji->id_karyawan,
                             'id_informasigaji' =>$informasigaji->id,
@@ -162,12 +162,12 @@ class InformasigajiController extends Controller
                             'nominal'          =>$nominal,
                         ];
                     }
-                   
+
                 }
                 Detailinformasigaji::insert($details);
-            }  
+            }
         }
-        return redirect()->back()->with('pesan','Data Informasi Gaji berhasil dibuat');
+        return redirect()->back()->with('success','Data Informasi Gaji berhasil dibuat');
 
     }
 }

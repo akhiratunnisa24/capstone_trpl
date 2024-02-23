@@ -204,7 +204,7 @@ class ResignAdminController extends Controller
         Mail::to($tujuan)->send(new ResignNotification($data));
         // dd($data);
 
-        return redirect()->back()->with('pesan', 'Permohonan Resign Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
+        return redirect()->back()->with('success', 'Permohonan Resign Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
 
         // return redirect()->back();
 
@@ -465,7 +465,7 @@ class ResignAdminController extends Controller
         $resigndelete = Resign::find($id);
         $resigndelete->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 
 }

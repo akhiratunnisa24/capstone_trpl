@@ -17,21 +17,21 @@ class SetcutiController extends Controller
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;        
-        if ($role == 1 || $role == 2) 
-        { 
+        $role = Auth::user()->role;
+        if ($role == 1 || $role == 2)
+        {
             $setcuti = Jeniscuti::where('partner',Auth::user()->partner)->get();
             // dd($setcuti);
              return view('admin.kategori.settingkategori', compact('setcuti','row','role'));
         }
          else {
-                
-            return redirect()->back(); 
+
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');;
         }
-       
+
     }
 
-    
+
     public function update(Request $request, $id)
     {
         $setcuti = Jeniscuti::findOrFail($id);
@@ -44,7 +44,7 @@ class SetcutiController extends Controller
             $setcuti->save();
         }
 
-        return redirect()->back()->with('pesan', 'Kategori Cuti diaktifkan');
+        return redirect()->back()->with('success', 'Kategori Cuti diaktifkan');
     }
 
 }

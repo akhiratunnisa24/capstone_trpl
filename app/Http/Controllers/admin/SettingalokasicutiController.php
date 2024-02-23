@@ -53,7 +53,7 @@ class SettingalokasicutiController extends Controller
             return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row','jabatanNull','status','karyawan','alokasiCuti'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -529,7 +529,6 @@ class SettingalokasicutiController extends Controller
 
     public function updates(Request $request, $id)
     {
-        dd($request->all(),$id);
         $settingalokasi = Settingalokasi::find($id);
         if ($request->mode_alokasi == 'Berdasarkan Departemen') {
             // dd($settingalokasi->departemen);
@@ -557,7 +556,7 @@ class SettingalokasicutiController extends Controller
             $settingalokasi['mode_karyawan'] = $mode;
             $settingalokasi->update();
         }
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil diupdate');
     }
 }
 

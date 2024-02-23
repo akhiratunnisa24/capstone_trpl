@@ -55,7 +55,7 @@ class PenggajianController extends Controller
             return view('admin.penggajian.index',compact('row','role','karyawan','slipgaji'));
         }else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -426,7 +426,7 @@ class PenggajianController extends Controller
             }
 
             $pesan = "Slip Gaji untuk ". $getKaryawan->nama . " Periode ". $request->tgl_awal . " s/d " .  $request->tgl_akhir . " Berhasil dibuat";
-            return redirect()->back()->with('pesan',$pesan);
+            return redirect()->back()->with('success',$pesan);
         }
     }
 
@@ -462,7 +462,7 @@ class PenggajianController extends Controller
             return view('admin.penggajian.slip',compact('row','detailgaji','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi'));
         }else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -490,7 +490,7 @@ class PenggajianController extends Controller
             return view('admin.penggajian.indexgrup',compact('row','role','karyawan','slip','slipgrup','slipgrupindex'));
         }else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -510,7 +510,7 @@ class PenggajianController extends Controller
             return view('admin.penggajian.creategrup', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -933,9 +933,9 @@ class PenggajianController extends Controller
                         }
                     }
             }
-            return redirect()->back()->with('pesan','Data berhasil disimpan');
+            return redirect()->back()->with('success','Data berhasil disimpan');
         }else{
-            return redirect()->back()->with('pesa','Data sudah ada pada sistem');
+            return redirect()->back()->with('error','Data sudah ada pada sistem');
         }
 
 
@@ -985,7 +985,7 @@ class PenggajianController extends Controller
             ];
             return view('admin.penggajian.slipgrup',$output);
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -1111,7 +1111,7 @@ class PenggajianController extends Controller
             'nama_bank' => $request->nama_bank,
             'no_rekening' => $request->nomor_rekening,
         ]);
-        return redirect()->back()->with('pesan','Data Karyawan berhasil di update.');
+        return redirect()->back()->with('success','Data Karyawan berhasil di update.');
     }
 
     public function update(Request $request, $id)
@@ -1131,7 +1131,7 @@ class PenggajianController extends Controller
         $slipgrupindex->partner = $request->partner;
         $slipgrupindex->save();
 
-        return redirect()->back()->with('pesan', 'Data berhasil diupdate');
+        return redirect()->back()->with('success', 'Data berhasil diupdate');
     }
 
     public function slipgajipdf (Request $request,$id)
@@ -1445,11 +1445,11 @@ class PenggajianController extends Controller
             $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
             // dd($detailgaji);
             return view('admin.penggajian.slipgajifix', compact('slipgaji', 'detailinformasi', 'role', 'pesan', 'kehadiran', 'row', 'detailgaji'))
-            ->with('pesan', $pesan);
+            ->with('success', $pesan);
         }
         else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -1487,7 +1487,7 @@ class PenggajianController extends Controller
             return view('admin.penggajian.slipgajifix',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi','detailgaji'));
         }else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function destroy(Request $request, $id)
@@ -1496,7 +1496,7 @@ class PenggajianController extends Controller
         $penggajian->detailpenggajians()->delete();
         $penggajian->delete();
 
-        return redirect()->back()->with('pesan', 'Data Slip Gaji berhasil dihapus');
+        return redirect()->back()->with('success', 'Data Slip Gaji berhasil dihapus');
     }
 
 }

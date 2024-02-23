@@ -118,7 +118,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.index', compact('karyawan', 'row', 'akun', 'query', 'results', 'posisi', 'role'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -2075,7 +2075,7 @@ class karyawanController extends Controller
         }
         else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -2099,7 +2099,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.create', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');\
         }
     }
 
@@ -2452,7 +2452,7 @@ class karyawanController extends Controller
             ]);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');\
         }
     }
 
@@ -2716,7 +2716,7 @@ class karyawanController extends Controller
             ]);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -2763,7 +2763,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.showIdentitas', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
 
     }
@@ -2812,7 +2812,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.updateIdentitas', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -3021,7 +3021,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.showPendidikan', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function addpformal(Request $request, $id)
@@ -3111,12 +3111,12 @@ class karyawanController extends Controller
                     "ijazah_formal"      => null
                 ]
             );
-            return redirect()->back()->with('pesan','Data sudah dihapus');
+            return redirect()->back()->with('success','Data sudah dihapus');
         }
         else
         {
             Rpendidikan::destroy($id);
-            return redirect()->back()->with('pesan','Data sudah dihapus');
+            return redirect()->back()->with('success','Data sudah dihapus');
         }
     }
 
@@ -3136,12 +3136,12 @@ class karyawanController extends Controller
                     "ijazah_nonformal"      => null,
                 ]
             );
-            return redirect()->back()->with('pesan','Data sudah dihapus');
+            return redirect()->back()->with('success','Data sudah dihapus');
         }
         else
         {
             Rpendidikan::destroy($id);
-            return redirect()->back()->with('pesan','Data sudah dihapus');
+            return redirect()->back()->with('success','Data sudah dihapus');
         }
     }
 
@@ -3166,14 +3166,14 @@ class karyawanController extends Controller
             return view('admin.karyawan.showPekerjaan', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function destroyPekerjaan($id)
     {
         Rpekerjaan::destroy($id);
 
-        return redirect()->back()->with('pesan','Data sudah dihapus');
+        return redirect()->back()->with('success','Data sudah dihapus');
     }
 
     public function showorganisasi($id)
@@ -3197,14 +3197,14 @@ class karyawanController extends Controller
             return view('admin.karyawan.showOrganisasi', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function destroyOrganisasi(Request $request, $id)
     {
         Rorganisasi::destroy($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 
     public function showprestasi($id)
@@ -3228,14 +3228,14 @@ class karyawanController extends Controller
             return view('admin.karyawan.showPrestasi', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function destroyPrestasi(Request $request, $id)
     {
         Rprestasi::destroy($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data Berhasil dihapus');
     }
     public function showkeluarga($id)
     {
@@ -3258,14 +3258,14 @@ class karyawanController extends Controller
             return view('admin.karyawan.showKeluarga', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function destroyKeluarga($id)
     {
         Keluarga::destroy($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
     public function showkontakdarurat($id)
     {
@@ -3288,14 +3288,14 @@ class karyawanController extends Controller
             return view('admin.karyawan.showKontakdarurat', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function destroyKonrat($id)
     {
         Kdarurat::destroy($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 
 
@@ -3358,7 +3358,7 @@ class karyawanController extends Controller
         $karyawan->user2()->delete();
         $karyawan->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 
     public function editPassword(Request $data, $id)
@@ -3401,7 +3401,7 @@ class karyawanController extends Controller
     public function importexcel(Request $request)
     {
             Excel::import(new karyawanImport, request()->file('file'));
-            return redirect()->back()->with('pesan','Data Berhasil di Import');
+            return redirect()->back()->with('success','Data Berhasil di Import');
     }
 
     public function exportExcel()
@@ -3473,7 +3473,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.showKaryawanCuti', compact('izin', 'row', 'cuti', 'izinBulanIni', 'cutiBulanIni', 'izinBulanLalu', 'cutiBulanLalu'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -3511,7 +3511,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.showKaryawanAbsen', compact('absen', 'row', 'absenBulanIni', 'absenBulanLalu'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -3576,7 +3576,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.showKaryawanTerlambat', compact('terlambat', 'row', 'terlambatBulanIni', 'terlambatBulanLalu'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -3631,7 +3631,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.showKaryawanTidakMasuk', compact('tidakMasuk', 'row', 'tidakMasukBulanIni', 'tidakMasukBulanLalu'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function downloadpdf(Request $request, $id)
@@ -3680,7 +3680,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.showFile', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function editfile($id)
@@ -3703,7 +3703,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.editUpload', $output);
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
     public function updatefile(Request $request, $id)
@@ -3954,10 +3954,8 @@ class karyawanController extends Controller
             $file->move(public_path() . '\File_Keputusan', $namaalihTugas);
             $digital->surat_alih_tugas = $namaalihTugas;
         }
-
-
         $digital->save();
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil ditambahkan');
     }
 
     ///EDIT DATA VIA USER MASING-MASING
@@ -3989,7 +3987,7 @@ class karyawanController extends Controller
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil diupdate');
     }
 
 
@@ -4168,7 +4166,7 @@ class karyawanController extends Controller
             }
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -4303,7 +4301,7 @@ class karyawanController extends Controller
 
                 // $informasigaji->delete();
             }else{
-                return redirect()->back()->with('pesa','Silahkan pilih struktur gaji karyawan terlebih dahulu');
+                return redirect()->back()->with('error','Silahkan pilih struktur gaji karyawan terlebih dahulu');
             }
         }
         // }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)
@@ -4322,7 +4320,7 @@ class karyawanController extends Controller
         // dd($informasigaji);
         // dd($karyawan->status_karyawan,$data['status_karyawan'], $data['jabatan'],$level);
 
-        return redirect()->back()->with('pesan','Data Karyawan berhasil di update.');
+        return redirect()->back()->with('success','Data Karyawan berhasil di update.');
     }
 
 
@@ -4409,7 +4407,7 @@ class karyawanController extends Controller
                 Detailinformasigaji::insert($details);
         }
 
-        return redirect()->back()->with('pesan','Struktur Gaji berhasil dibuat');
+        return redirect()->back()->with('success','Struktur Gaji berhasil dibuat');
     }
 
     public function updateinformasigaji(Request $request,$id)
@@ -4488,7 +4486,7 @@ class karyawanController extends Controller
             }
         }
 
-        return redirect()->back()->with('pesan','Informasi Gaji berhasil diupdate');
+        return redirect()->back()->with('success','Informasi Gaji berhasil diupdate');
     }
 
     public function updatedetailinformasi(Request $request,$id)
@@ -4501,7 +4499,7 @@ class karyawanController extends Controller
             ->update([
                 'nominal' => $nominal,
             ]);
-        return redirect()->back()->with('pesan','Detail benefit berhasil di update');
+        return redirect()->back()->with('success','Detail benefit berhasil di update');
 
     }
 }

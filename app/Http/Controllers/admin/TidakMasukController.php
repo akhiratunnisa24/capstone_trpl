@@ -28,7 +28,7 @@ class TidakMasukController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        
+
         if ($role == 1 || $role == 2) {
             $karyawan = Karyawan::where('partner',Auth::user()->partner)->orderBy('nama','asc')->get();
             $idkaryawan = $request->id_karyawan;
@@ -57,22 +57,22 @@ class TidakMasukController extends Controller
             }
 
             return view('admin.tidakmasuk.index',compact('tidakmasuk','karyawan','row','role'));
-            
+
             //menghapus filter data
             $request->session()->forget('id_karyawan');
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
-        } 
+        }
         else {
-        
-            return redirect()->back(); 
+
+            return redirect()->back();
         }
     }
 
     public function tampil(Request $request)
     {
         $role = Auth::user()->role;
-        
+
         if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
               // $nottidakmasuk = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
@@ -144,7 +144,7 @@ class TidakMasukController extends Controller
     public function tampilTerlambat(Request $request)
     {
         $role = Auth::user()->role;
-        
+
         if ($role == 1) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -192,8 +192,8 @@ class TidakMasukController extends Controller
     public function showTerlambat($id)
     {
         $role = Auth::user()->role;
-        
-        if ($role == 1) 
+
+        if ($role == 1)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -239,13 +239,13 @@ class TidakMasukController extends Controller
                     $idk = $tel->id_karyawan;
                 }
             }
-            
+
             $sp1 = Absensi::with('departemens','karyawans')
                 ->where('id_karyawan','=',$idk)
                 ->whereMonth('tanggal', '=',Carbon::now()->subMonth()->month)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->get();
-            
+
             //sp2
             $idkar = null;
             $datatelat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
@@ -263,9 +263,9 @@ class TidakMasukController extends Controller
                 foreach($datatelat as $telat){
                     $idkar = $telat->id_karyawan;
                 }
-                
+
             }
-            
+
             $sp2 = Absensi::with('departemens','karyawans')
                 ->where('id_karyawan','=',$idkar)
                 ->whereMonth('tanggal', '=',Carbon::now()->subMonth()->month)
@@ -282,8 +282,8 @@ class TidakMasukController extends Controller
     public function show($id)
     {
         $role = Auth::user()->role;
-        
-        if ($role == 1) 
+
+        if ($role == 1)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $tidakmasuk = Tidakmasuk::with('departemen')
@@ -304,7 +304,7 @@ class TidakMasukController extends Controller
             //     ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)
             //     ->whereMonth('absensi.tanggal', '=', Carbon::now()->subMonth()->month)
             //     ->get();
-        
+
             $absensi = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
                 ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
                 ->select('absensi.id_karyawan as id_karyawan', 'absensi.tanggal as tanggal','absensi.terlambat as terlambat','karyawan.nama as nama')
@@ -337,7 +337,7 @@ class TidakMasukController extends Controller
         $tahun      = $request->session()->get('tahun',);
 
         // dd($idkaryawan,$bulan,$tahun );
-    
+
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $tidakmasuk = Tidakmasuk::with('departemen')->where('id_pegawai', $idkaryawan)
@@ -349,9 +349,9 @@ class TidakMasukController extends Controller
             $tidakmasuk = Tidakmasuk::with('departemen')->orderBy('tanggal','desc')->get();
         }
 
-        if ($tidakmasuk->isEmpty()) 
+        if ($tidakmasuk->isEmpty())
         {
-            return redirect()->back()->with('pesa','Tidak Ada Data.');
+            return redirect()->back()->with('error','Tidak Ada Data.');
         } else {
             $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
             $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan,'setorganisasi'=> $setorganisasi])
@@ -359,7 +359,7 @@ class TidakMasukController extends Controller
             $pdfName = "Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf";
             return $pdf->stream($pdfName);
         }
-        
+
         // if ($tidakmasuk->first()) {
         //     $pdfName = "Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf";
         // } else {
@@ -399,12 +399,12 @@ class TidakMasukController extends Controller
         if ($data->isEmpty()) {
             // Jika $data kosong, berikan nilai default untuk $nama
             // $nama = 'Data Kosong';
-            return redirect()->back()->with('pesa','Tidak ditemukan data yang sesuai filter data.');
+            return redirect()->back()->with('error','Tidak ditemukan data yang sesuai filter data.');
         } else {
             // Jika $data tidak kosong, ambil nama dari elemen pertama
             $nama = $data->first()->nama;
             return Excel::download(new TidakmasukExport($data,$idkaryawan),"Data Absensi Tidak Masuk ".$data->first()->nama.".xlsx");
         }
-        
+
     }
 }

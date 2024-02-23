@@ -21,10 +21,10 @@ class InformasiController extends Controller
             return view('admin.datamaster.informasi.index', compact('informasi', 'row'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
@@ -41,7 +41,7 @@ class InformasiController extends Controller
         $informasi->partner = $request->partner;
         $informasi->save();
 
-        return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
     public function update(Request $request, $id)
@@ -54,10 +54,10 @@ class InformasiController extends Controller
         $informasi->tanggal_berakhir = Carbon::createFromFormat('d/m/Y', $request->tanggal_berakhir)->format('Y-m-d');
         // dd($informasi);
         $informasi->update();
-    
-        return redirect()->back()->with('pesan','Data berhasil diupdate !');
+
+        return redirect()->back()->with('success','Data berhasil diupdate !');
     }
-    
+
     // public function destroy($id)
     // {
     //     $informasi = Informasi::find($id);
@@ -67,9 +67,9 @@ class InformasiController extends Controller
     //     if (!$karyawan) {
     //         $leveljabatan = LevelJabatan::find($id);
     //         $leveljabatan->delete();
-    //         return redirect()->back()->with('pesan', 'Level Jabatan berhasil dihapus');
+    //         return redirect()->back()->with('success', 'Level Jabatan berhasil dihapus');
     //     } else {
-    //         return redirect()->back()->with('pesa', 'Level Jabatan tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+    //         return redirect()->back()->with('error', 'Level Jabatan tidak dapat dihapus karena digunakan dalam tabel karyawan.');
     //     }
 
     // }

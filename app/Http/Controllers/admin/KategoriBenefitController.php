@@ -32,12 +32,12 @@ class KategoriBenefitController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 6) 
+        if ($role == 1 || $role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $kategori = Kategoribenefit::where('partner', Auth::user()->partner)->orWhere('partner', 0)->orderBy('id', 'asc')->get();
             return view('admin.benefit.kategori.index', compact('kategori', 'row','role'));
-        } elseif ($role == 5) 
+        } elseif ($role == 5)
         {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
@@ -46,7 +46,7 @@ class KategoriBenefitController extends Controller
         }
         else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -63,9 +63,9 @@ class KategoriBenefitController extends Controller
             $query->whereRaw('LOWER(nama_kategori) = ?', [strtolower($nama_kategori)]);
             $query->where('partner', $partner);
         })->first();
-    
+
         if ($benefit) {
-            return redirect()->back()->with('pesa', 'Data Kategori Benefit ' . $nama_kategori . ' sudah ada !');
+            return redirect()->back()->with('error', 'Data Kategori Benefit ' . $nama_kategori . ' sudah ada !');
         } else {
             // Jika data benefit belum ada, simpan data baru
             $benefit = new Kategoribenefit;
@@ -73,42 +73,42 @@ class KategoriBenefitController extends Controller
             $benefit->kode          = $request->kode;
             $benefit->partner       = $partner;
             $benefit->save();
-    
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 
     public function update(Request $request, $id)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $benefit = Kategoribenefit::find($id);
             $benefit->nama_kategori = $request->nama_kategori;
             $benefit->kode = $request->kode;
             $benefit->update();
 
-            return redirect()->back()->with('pesan','Data berhasil diupdate !');
+            return redirect()->back()->with('success','Data berhasil diupdate !');
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
     public function destroy($id)
     {
         $kbenefit = Kategoribenefit::find($id);
-    
+
         // Cek data ke tabel "karyawan"
         $benefit = Benefit::where('kategori', $kbenefit->id)->first();
         if ($benefit !== null) {
-            return redirect()->back()->with('pesa', 'Kategori Benefit tidak dapat dihapus karena digunakan dalam tabel karyawan.');
-        } else 
+            return redirect()->back()->with('error', 'Kategori Benefit tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+        } else
         {
-            if ($benefit) 
+            if ($benefit)
             {
                 $benefit->delete();
             }
-            return redirect()->back()->with('pesan', 'Data Kategori Benefit berhasil dihapus');
+            return redirect()->back()->with('success', 'Data Kategori Benefit berhasil dihapus');
         }
     }
 }

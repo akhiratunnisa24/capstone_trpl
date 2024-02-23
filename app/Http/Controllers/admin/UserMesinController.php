@@ -81,12 +81,12 @@ class UserMesinController extends Controller
                 $getUser->update(['status' => 1]);
             }
 
-            return redirect()->route('user_mesin.index')->with('pesan', 'Data user mesin berhasil ditambahkan.');
+            return redirect()->route('user_mesin.index')->with('success', 'Data user mesin berhasil ditambahkan.');
         }else
         {
             $pesan = 'Data dengan Nomor ID tersebut sudah ada.';
-            Session::flash('pesa', $pesan);
-            return redirect()->back()->with('pesa',$pesan);
+            Session::flash('error', $pesan);
+            return redirect()->back()->with('error',$pesan);
         }
 
 

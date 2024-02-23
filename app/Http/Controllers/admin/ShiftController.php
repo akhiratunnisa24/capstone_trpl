@@ -43,7 +43,7 @@ class ShiftController extends Controller
         }
         else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -70,7 +70,7 @@ class ShiftController extends Controller
 
         if ($shift) {
             // Jika data shift sudah ada, kembalikan pesan bahwa data sudah ada
-            return redirect()->back()->with('pesa', 'Data Shift sudah ada !');
+            return redirect()->back()->with('error', 'Data Shift sudah ada !');
         } else {
             // Jika data shift belum ada, simpan data baru
             $shiftData = array(
@@ -83,7 +83,7 @@ class ShiftController extends Controller
 
             DB::table('shift')->insert($shiftData);
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 
@@ -98,7 +98,7 @@ class ShiftController extends Controller
         );
         // dd($shift);
         DB::table('shift')->where('id',$id)->update($shift);
-        return redirect()->back()->with('pesan','Data berhasil diupdate !');;
+        return redirect()->back()->with('success','Data berhasil diupdate !');;
     }
 
     public function destroy($id)
@@ -107,10 +107,10 @@ class ShiftController extends Controller
 
         $jadwal = Jadwal::where('id_shift', $id)->first();
         if ($jadwal != null) {
-            return redirect()->back()->with('pesa', 'Shift tidak dapat dihapus karena digunakan pada Jadwal');
+            return redirect()->back()->with('error', 'Shift tidak dapat dihapus karena digunakan pada Jadwal');
         } else {
             $shift->delete();
-            return redirect()->back()->with('pesan', 'Shift berhasil dihapus');
+            return redirect()->back()->with('success', 'Shift berhasil dihapus');
         }
     }
 

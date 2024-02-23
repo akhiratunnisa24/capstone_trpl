@@ -73,7 +73,7 @@ class ManagerController extends Controller
             return view('manager.staff.dataStaff', compact('staff', 'row', 'partner'));
         }
         else {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
 
 
@@ -224,7 +224,7 @@ class ManagerController extends Controller
 
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
 
         // elseif($role == 2 && $row->jabatan = "Asistant Manager")
@@ -1024,7 +1024,7 @@ class ManagerController extends Controller
 
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -1245,7 +1245,7 @@ class ManagerController extends Controller
 
                 }
                 else{
-                    return redirect()->back();
+                    return redirect()->back()->with('error','Anda tidak memiliki hak akses');
                 }
 
             }
@@ -1308,7 +1308,7 @@ class ManagerController extends Controller
                         Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
                         return redirect()->back()->withInput()->with('success', 'Permintaan ' . $jeniscuti->jenis_cuti . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
                     }else{
-                        return redirect()->back();
+                        return redirect()->back()->with('error','Anda tidak memiliki hak akses');
                     }
             }
             elseif($role == 1 && $row->jabatan == "Asistant Manager")
@@ -1370,11 +1370,11 @@ class ManagerController extends Controller
                         Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
                         return redirect()->back()->withInput()->with('success', 'Permintaan ' . $jeniscuti->jenis_cuti . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
                     }else{
-                        return redirect()->back();
+                        return redirect()->back()->with('error','Anda tidak memiliki hak akses');
                     }
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         else
@@ -1542,7 +1542,7 @@ class ManagerController extends Controller
                         return redirect()->back()->withInput()->with('success', 'Permintaan ' . $jeniscuti->jenis_cuti . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
                     }
                     else{
-                        return redirect()->back();
+                        return redirect()->back()->with('error','Anda tidak memiliki hak akses');
                     }
             }
             elseif($datacuti && $role == 3 && $row->jabatan == "Asistant Manager")
@@ -1602,11 +1602,11 @@ class ManagerController extends Controller
                     return redirect()->back()->withInput()->with('success', 'Permintaan ' . $jeniscuti->jenis_cuti . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
                 }
                 else{
-                    return redirect()->back();
+                    return redirect()->back()->with('error','Anda tidak memiliki hak akses');
                 }
 
             }else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
     }
@@ -1724,9 +1724,9 @@ class ManagerController extends Controller
                 }
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+                return redirect()->back()->with('success', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             }else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
@@ -1833,7 +1833,7 @@ class ManagerController extends Controller
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+                return redirect()->back()->with('success', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             // }
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Manager")
@@ -1933,7 +1933,7 @@ class ManagerController extends Controller
                 }
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+                return redirect()->back()->with('success', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -2033,15 +2033,15 @@ class ManagerController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+                return redirect()->back()->with('success', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
 
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -2220,7 +2220,7 @@ class ManagerController extends Controller
                 return redirect()->route('cuti_Staff',['tp'=>2])->with('success','Permintaan ' . $jenisizin->jenis_izin . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         elseif($role == 3 && $row->jabatan == "Asistant Manager")
@@ -2282,7 +2282,7 @@ class ManagerController extends Controller
             }
             else
             {
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         elseif($role == 1 && $row->jabatan == "Asistant Manager")
@@ -2349,12 +2349,12 @@ class ManagerController extends Controller
             }
             else
             {
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         else
         {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
 
     }
@@ -2463,7 +2463,7 @@ class ManagerController extends Controller
             }
 
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-            return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+            return redirect()->back()->with('success', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             // return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
         }
@@ -2562,7 +2562,7 @@ class ManagerController extends Controller
                 }
             }
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-            return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+            return redirect()->back()->with('success', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             // return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
         }
@@ -2664,7 +2664,7 @@ class ManagerController extends Controller
 
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+                return redirect()->back()->with('success', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
 
             }elseif($dataizin && $dataizin->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -2768,16 +2768,16 @@ class ManagerController extends Controller
                 }
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+                return redirect()->back()->with('success', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
                 // return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
             }else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
 
 
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -2826,7 +2826,7 @@ class ManagerController extends Controller
 
                 if ($data->isEmpty())
                 {
-                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                    return redirect()->back()->with('error','Tidak Ada Data');
                 } else {
                     $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                     return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "Rekap Absensi Bulan ".$nbulan." ". ucwords(strtolower($data->first()->karyawans->nama)) ." Departemen ". ucwords(strtolower($departemen->nama_departemen)) .".xlsx");
@@ -2847,7 +2847,7 @@ class ManagerController extends Controller
 
                 if ($data->isEmpty())
                 {
-                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                    return redirect()->back()->with('error','Tidak Ada Data');
                 } else {
                     $departemen = Departemen::where('id',$middep->divisi)->first();
                     $nbulan    = $namaBulan . ' ' . $tahun;
@@ -2863,7 +2863,7 @@ class ManagerController extends Controller
                     ->get();
                 if ($data->isEmpty())
                 {
-                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                    return redirect()->back()->with('error','Tidak Ada Data');
                 } else {
                     $departemen = Departemen::where('id',$middep->divisi)->first();
                     return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "Rekap Absensi Departemen ". ucwords(strtolower($departemen->nama_departemen)) .".xlsx");
@@ -2888,7 +2888,7 @@ class ManagerController extends Controller
 
                     if ($data->isEmpty())
                     {
-                        return redirect()->back()->with('pesa','Tidak Ada Data');
+                        return redirect()->back()->with('error','Tidak Ada Data');
                     } else {
                         $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                         return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep),
@@ -2912,7 +2912,7 @@ class ManagerController extends Controller
 
                     if ($data->isEmpty())
                     {
-                        return redirect()->back()->with('pesa','Tidak Ada Data');
+                        return redirect()->back()->with('error','Tidak Ada Data');
                     } else {
                         $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                         return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep),
@@ -2934,7 +2934,7 @@ class ManagerController extends Controller
 
                     if ($data->isEmpty())
                     {
-                        return redirect()->back()->with('pesa','Tidak Ada Data');
+                        return redirect()->back()->with('error','Tidak Ada Data');
                     } else {
                         return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "Rekap Absensi Departemen ".ucwords(strtolower($departemen->nama_departemen)) .".xlsx");
                     }
@@ -2942,7 +2942,7 @@ class ManagerController extends Controller
             }
             else
                 {
-                    return redirect()->back();
+                    return redirect()->back()->with('error','Anda tidak memiliki hak akses');
                 }
     }
 
@@ -2985,7 +2985,7 @@ class ManagerController extends Controller
 
                 if ($data->isEmpty())
                 {
-                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                    return redirect()->back()->with('error','Tidak Ada Data');
                 } else {
                     $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                     $pdfName = "Rekap Absensi Bulan ".$nbulan." " . ucwords(strtolower($data->first()->karyawans->nama)) . " Departemen ". ucwords(strtolower($departemen->nama_departemen)) .".pdf";
@@ -3009,7 +3009,7 @@ class ManagerController extends Controller
                 $nama = "";
                 if ($data->isEmpty())
                 {
-                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                    return redirect()->back()->with('error','Tidak Ada Data');
                 } else {
                     $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                     $pdfName = "Rekap Absensi Departemen ".ucwords(strtolower($departemen->nama_departemen)). " ". "Bulan ".$nbulan .".pdf";
@@ -3031,7 +3031,7 @@ class ManagerController extends Controller
 
                 if ($data->isEmpty())
                 {
-                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                    return redirect()->back()->with('error','Tidak Ada Data');
                 } else {
                     $nbulan = "-";
                     $pdfName = "Rekap Absensi Departemen ".ucwords(strtolower($departemen->nama_departemen)) .".pdf";
@@ -3059,7 +3059,7 @@ class ManagerController extends Controller
 
                     if ($data->isEmpty())
                     {
-                        return redirect()->back()->with('pesa','Tidak Ada Data');
+                        return redirect()->back()->with('error','Tidak Ada Data');
                     } else {
                         $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                         $pdfName = "Rekap Absensi Bulan ".$nbulan." " . ucwords(strtolower($data->first()->karyawans->nama)) . " Departemen ". ucwords(strtolower($departemen->nama_departemen)) .".pdf";
@@ -3084,7 +3084,7 @@ class ManagerController extends Controller
                     $nama = "";
                     if ($data->isEmpty())
                     {
-                        return redirect()->back()->with('pesa','Tidak Ada Data');
+                        return redirect()->back()->with('error','Tidak Ada Data');
                     } else {
                         $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                         $pdfName = "Rekap Absensi Bulan ".$nbulan. " Departemen ".ucwords(strtolower($departemen->nama_departemen)) .".pdf";
@@ -3111,7 +3111,7 @@ class ManagerController extends Controller
 
                     if ($data->isEmpty())
                     {
-                        return redirect()->back()->with('pesa','Tidak Ada Data');
+                        return redirect()->back()->with('error','Tidak Ada Data');
                     } else {
                         $nbulan = "-";
                         $pdfName = "Rekap Absensi Departemen ".ucwords(strtolower($departemen->nama_departemen)) .".pdf";
@@ -3124,7 +3124,7 @@ class ManagerController extends Controller
                 }
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             };
     }
 

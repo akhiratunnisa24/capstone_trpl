@@ -19,7 +19,7 @@ class SettingcutiController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $settingcuti = Settingcuti::orderBy('id', 'asc')->get();
@@ -27,8 +27,8 @@ class SettingcutiController extends Controller
             return view('admin.settingcuti.index', compact('settingcuti','row'));
 
         } else {
-    
-            return redirect()->back();
+
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -54,7 +54,7 @@ class SettingcutiController extends Controller
                 foreach ($alokasicuti as $data) {
                     $cek = Settingcuti::where('id_jeniscuti', $data->id_jeniscuti)->where('id_pegawai', $data->id_karyawan)->exists();
                     $ceksisa = Sisacuti::where('jenis_cuti', $data->id_jeniscuti)->where('id_pegawai', $data->id_karyawan)->exists();
-        
+
                     // dd($data);
                     if(!$cek && !$ceksisa)
                     {
@@ -66,7 +66,7 @@ class SettingcutiController extends Controller
                         $settingcuti->sisa_cuti    = 0;
                         $settingcuti->periode      = \Carbon\Carbon::parse($data->aktif_dari)->format('Y');
                         $settingcuti->save();
-        
+
                         // insert data ke tabel sisacuti
                         $sisacuti = new Sisacuti;
                         $sisacuti->id_pegawai   = $settingcuti->id_pegawai;
@@ -80,19 +80,19 @@ class SettingcutiController extends Controller
                         $sisacuti->sampai       = $year.'-03-31';;
                         $sisacuti->status       = 1;
                         $sisacuti->save();
-        
+
                         $alokasi = Alokasicuti::where('id_karyawan', $settingcuti->id_pegawai)
                             ->where('id_jeniscuti',$settingcuti->id_jeniscuti)
                             ->whereYear('aktif_dari', Carbon::now()->subYear()->year)
                             ->update([
                                 'status' => 0,
                             ]);
-        
+
                         Log::info('Data Reset cuti Tahunan Berhasil Disimpan');
                         Log::info('Data Sisa cuti tahun lalu Berhasil Disimpan');
                     }
                     else{
-            
+
                         $alokasicutisaatini = Alokasicuti::select('id','id_karyawan', 'id_jeniscuti','durasi','aktif_dari')
                             ->where('id_jeniscuti', $jeniscuti->id)
                             ->whereYear('aktif_dari', Carbon::now()->year)
@@ -100,25 +100,25 @@ class SettingcutiController extends Controller
                         //untuk mengatasi error Property [durasi] does not exist on this collection instance. gunakan foreach
                         foreach($alokasicutisaatini as $alokasi)
                         {
-        
+
                             $id_karyawan = $alokasi->id_karyawan;
                             $durasi = $alokasi->durasi;
                             $aktif = \Carbon\Carbon::parse($alokasi->aktif_dari)->format('Y');
-        
+
                             $settingcuti = Settingcuti::where('id_jeniscuti', $alokasi->id_jeniscuti)
                                 ->where('id_pegawai', $id_karyawan)
                                 ->get();
-                        
+
                             $sisacuti = Sisacuti::where('jenis_cuti',$alokasi->id_jeniscuti)
                                 ->where('id_pegawai', $id_karyawan)
                                 ->get();
-        
+
                             // $chek = Settingcuti::where('id_jeniscuti', $jeniscuti->id)->where('id_pegawai', $alokasi->id_karyawan)->exists();
                             // $ceksisacuti = Sisacuti::where('id_jeniscuti',  $jeniscuti->id)->where('id_pegawai', $alokasi->id_karyawan)->exists();
-                            
+
                             // dd($chek, $ceksisacuti);
                             if($settingcuti && $sisacuti)
-                            {   
+                            {
                                 foreach($settingcuti as $settingcuti)
                                 {
                                     $jumlah_cuti = $settingcuti->jumlah_cuti;
@@ -130,7 +130,7 @@ class SettingcutiController extends Controller
                                 $settingcuti->sisa_cuti   = $jumlah_cuti;
                                 $settingcuti->periode     = $aktif;
                                 $settingcuti->update();
-        
+
                                 // dd($settingcuti);
                                 // Update data pada sisacuti
                                 $sisacuti->id_alokasi  = $settingcuti->id_alokasi;
@@ -140,24 +140,24 @@ class SettingcutiController extends Controller
                                 $sisacuti->sampai       = $year.'-03-31';;
                                 $sisacuti->status       = 1;
                                 $sisacuti->update();
-        
-                                Log::info('Data Reset Cuti Tahunan Berhasil di UPDATE'); 
+
+                                Log::info('Data Reset Cuti Tahunan Berhasil di UPDATE');
                             }
                             else{
-                                Log::info('Data Reset Cuti Tahunan Tidak Ditemukan');   
+                                Log::info('Data Reset Cuti Tahunan Tidak Ditemukan');
                             }
                         }
-                        
+
                     }
                 }
-                return redirect()->back();
+                return redirect()->back()->with('success','Data Cuti Tahunan berhasil direset');
             }else{
-                return redirect()->back()->with('pesa','Data Alokasi Tidak ditemukan');
+                return redirect()->back()->with('error','Data Alokasi Tidak ditemukan');
             }
         }else{
-            return redirect()->back()->with('pesa','Data Jenis Cuti Tahunan Tidak ditemukan');
+            return redirect()->back()->with('error','Data Jenis Cuti Tahunan Tidak ditemukan');
         }
-       
+
     }
 
     public function resetTahunini(Request $request)
@@ -227,10 +227,10 @@ class SettingcutiController extends Controller
 
                     $chek = Settingcuti::where('id_jeniscuti', $jeniscuti->id)->where('id_pegawai', $alokasi->id_karyawan)->exists();
                     $ceksisacuti = Sisacuti::where('jenis_cuti',  $jeniscuti->id)->where('id_pegawai', $alokasi->id_karyawan)->exists();
-                    
+
                     // dd($chek, $ceksisacuti);
                     if($chek && $ceksisacuti)
-                    {   
+                    {
                         $settingcuti = Settingcuti::where('id_jeniscuti',$alokasi->id_jeniscuti)
                                         ->where('id_karyawan', $alokasicuti->id_karyawan)
                                         ->update([
@@ -239,7 +239,7 @@ class SettingcutiController extends Controller
                                             'sisa_cuti'  => $alokasi->durasi,
                                             'periode'    => $aktif,
                                         ]);
-            
+
                         $sisacuti = Settingcuti::where('id_setting',$settingcuti->id)
                                     ->where('id_karyawan', $alokasicuti->id_karyawan)
                                     ->update([
@@ -251,17 +251,17 @@ class SettingcutiController extends Controller
                                         'sampai'     => $year.'-03-31',
                                         'status'     => 0,
                                     ]);
-            
-                        Log::info('Data Reset Cuti Tahun ini  Berhasil di Perbaharui'); 
+
+                        Log::info('Data Reset Cuti Tahun ini  Berhasil di Perbaharui');
                     }
                     else{
-                        Log::info('Data Reset Cuti Tahunan Tidak Ditemukan');   
+                        Log::info('Data Reset Cuti Tahunan Tidak Ditemukan');
                     }
                 }
-                
+
             }
         }
-        return redirect()->back();
+        return redirect()->back()->with('error','Anda tidak memiliki hak akses');
     }
 
     public function destroy($id)

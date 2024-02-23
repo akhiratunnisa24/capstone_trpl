@@ -41,14 +41,14 @@
                                                         </div>
 
 
-                                                        @if (session('alert'))
+                                                        @if (session('error'))
                                                             <div class="alert alert-danger">
-                                                                {{ session('alert') }}
+                                                                {{ session('error') }}
                                                             </div>
                                                         @endif
-                                                        @if (session('alert2'))
+                                                        @if (session('success'))
                                                             <div class="alert alert-success">
-                                                                {{ session('alert2') }}
+                                                                {{ session('success') }}
                                                             </div>
                                                         @endif
 

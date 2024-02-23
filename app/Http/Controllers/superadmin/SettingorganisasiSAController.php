@@ -23,13 +23,13 @@ class SettingorganisasiSAController extends Controller
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $settingorganisasi = SettingOrganisasi::all();
-            $existingPartnerIds = $settingorganisasi->pluck('partner'); 
+            $existingPartnerIds = $settingorganisasi->pluck('partner');
             $partner = Partner::whereNotIn('id', $existingPartnerIds)->get();
             return view('superadmin.setting.index',compact('partner','settingorganisasi','row'));
         }
         else
         {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -66,7 +66,7 @@ class SettingorganisasiSAController extends Controller
 
         $settingorganisasi->save();
 
-        return redirect()->back()->with('pesan','Data Organisasi berhasil disimpan !');
+        return redirect()->back()->with('success','Data Organisasi berhasil disimpan !');
     }
 
     public function update(Request $request,$id)
@@ -110,7 +110,7 @@ class SettingorganisasiSAController extends Controller
         // dd($settingorganisasi);
         $settingorganisasi->update();
 
-        return redirect()->back()->with('pesan','Data Organisasi berhasil diperbaharui !');
+        return redirect()->back()->with('success','Data Organisasi berhasil diperbaharui !');
     }
 
     public function destroy($id)
