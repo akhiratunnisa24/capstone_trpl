@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\User;
 use App\Models\Status;
+use App\Models\CutiUbah;
 use App\Models\Karyawan;
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
@@ -363,6 +364,47 @@ class CutikaryawanController extends Controller
 
         $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
 
+        $dataLama = CutiUbah::where('id_cuti',$id)->first();
+        if($dataLama == null){
+            $DataBaru = new CutiUbah;
+        }else{
+            $DataBaru = $dataLama;
+        }
+            $DataBaru->id_cuti        = $cuti->id;
+            $DataBaru->tgl_permohonan = $cuti->tgl_permohonan;
+            $DataBaru->nik            = $cuti->nik;
+            $DataBaru->id_karyawan    = $cuti->id_karyawan;
+            $DataBaru->jabatan        = $cuti->jabatan;
+            $DataBaru->departemen     = $cuti->departemen;
+            $DataBaru->id_jeniscuti   = $cuti->id_jeniscuti;
+            $DataBaru->id_alokasi     = $cuti->id_alokasi;
+            $DataBaru->id_settingalokasi = $cuti->id_settingalokasi;
+            $DataBaru->keperluan      = $cuti->keperluan;
+            $DataBaru->tgl_mulai      = $cuti->tgl_mulai;
+            $DataBaru->tgl_selesai    = $cuti->tgl_selesai;
+            $DataBaru->jmlharikerja   = $cuti->jmlharikerja;
+            $DataBaru->saldohakcuti   = $cuti->saldohakcuti;
+            $DataBaru->jml_cuti       = $cuti->jml_cuti;
+            $DataBaru->sisacuti       = $cuti->sisacuti;
+            $DataBaru->keterangan     = $cuti->keterangan;
+            $DataBaru->status         = $cuti->status;
+            $DataBaru->catatan        = $cuti->catatan;
+            $DataBaru->tgldisetujui_a = $cuti->tgldisetujui_a;
+            $DataBaru->tgldisetujui_b = $cuti->tgldisetujui_b;
+            $DataBaru->tglditolak     = $cuti->tglditolak;
+            $DataBaru->batal_atasan   = $cuti->batal_atasan;
+            $DataBaru->batal_pimpinan = $cuti->batal_pimpinan;
+            $DataBaru->batalditolak   = $cuti->batalditolak;
+            $DataBaru->ubah_atasan    = $cuti->ubah_atasan;
+            $DataBaru->ubah_pimpinan  = $cuti->ubah_pimpinan;
+            $DataBaru->ubahditolak    = $cuti->ubahditolak;
+
+        if($dataLama == null){
+            $DataBaru->save();
+        }else{
+            $DataBaru->update();
+        }
+        
         $cuti->tgl_permohonan = $cuti->tgl_permohonan;
         $cuti->nik            = $cuti->nik;
         $cuti->id_karyawan    = $karyawan;

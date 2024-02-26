@@ -96,7 +96,7 @@
                                                                                         <i class="fa fa-eye" title="Lihat Detail"></i>
                                                                                     </a>
                                                                                 </form>
-                                                                                @if($data->status == 1 || $data->status == 6 || $data->status == 7)
+                                                                                @if($data->status == 1 && $data->catatan == null || $data->status == 6 && $data->catatan == null || $data->status == 7 && $data->catatan == null)
                                                                                     <form action="" method="POST">
                                                                                         <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#Editcuti{{ $data->id }}">
                                                                                             <i class="fa fa-edit" title="Edit"></i>
@@ -194,7 +194,7 @@
                                                                                     <i class="fa fa-eye" title="Lihat Detail"></i>
                                                                                 </a>
                                                                             </form>
-                                                                            @if($data->status == 1 || $data->status == 6 || $data->status == 7)
+                                                                            @if($data->status == 1 && $data->catatan == null || $data->status == 6 && $data->catatan == null || $data->status == 7 && $data->catatan == null)
                                                                                 <form action="" method="POST">
                                                                                     <a class="btn btn-success btn-sm"
                                                                                         data-toggle="modal"data-target="#Editizin{{ $data->id }}">
