@@ -33,7 +33,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         static $counter = 0;
-        dd($row);
+        // dd($row);
         if(isset($row['nik']) && isset($row['tanggal']))
         {
             // dd($row);

@@ -246,7 +246,7 @@ class DirekturController extends Controller
 
     public function leaveapproved($id)
     {
-        dd($id);
+        // dd($id);
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         $cuti = Cuti::where('id',$id)->first();

@@ -148,7 +148,7 @@ class CutiadminController extends Controller
                         ->distinct()
                         ->orderBy('created_at', 'DESC')
                         ->get();
-                    dd($cuti);
+                    // dd($cuti);
                     $izin =DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
                         ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                         ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')

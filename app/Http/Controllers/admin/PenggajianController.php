@@ -1342,7 +1342,7 @@ class PenggajianController extends Controller
                         }else{
                             $jumlah = $kehadiran->jumlah_hadir;
                             $total  = $detail->nominal * $jumlah;
-                            dd($detail,$jumlah,$total,$jam);
+                            // dd($detail,$jumlah,$total,$jam);
                         }
                         // dd($detail,$total);
                     }

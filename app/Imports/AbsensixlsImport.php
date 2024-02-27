@@ -44,11 +44,11 @@ class AbsensiImport implements ToModel,WithHeadingRow
         static $counter = 0;
         if(isset($row['nik']) && isset($row['tanggal']))
         {
-            dd($row);
+            // dd($row);
             $this->jumlahdata++;
             // Inisialisasi jumlah data yang sudah ada menjadi 0
             $jumlahDatasudahada = 0;
-            $jumlahKaryawanTidakTerdaftar = 0; 
+            $jumlahKaryawanTidakTerdaftar = 0;
             $tidakbisa = 0;
 
             $karyawan = Karyawan::where('nik', $row['nik'])->first();
@@ -76,7 +76,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                             ->first();
                         // dd($cuti);
                         $nama = Karyawan::where('id',$karyawan->id)->select('nama','divisi')->first();
-                        if($cuti !== NULL) 
+                        if($cuti !== NULL)
                         {
                             // dd($cuti,$row,$nama);
                             // dd($cuti);
@@ -130,7 +130,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
 
                                             $this->jumlahDataTidakMasuk++;// Increment jumlah data tidak masuk
                                             $this->jumlahimporttidakmasuk++;
-                                            
+
                                         }
                                     }
                                 }
@@ -152,7 +152,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                                     $tidakmasuk->divisi     = $nama->divisi;
                                     $tidakmasuk->status     = 'tanpa keterangan';
                                     $tidakmasuk->tanggal    = $tgl;
-                            
+
                                     // dd($tidakmasuk);
                                     $tidakmasuk->save();
                                     // dd($tidakmasuk);
@@ -166,10 +166,10 @@ class AbsensiImport implements ToModel,WithHeadingRow
                                     $this->datatidakbisadiimport++;
                                     $this->tidakmasukdatabse++;
                                     $tidakbisa++;
-                                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);         
+                                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
                                     Log::info('Data tidak masuk karyawan sudah ada');
                                 }
-                            } 
+                            }
                         }
                     }else
                     {
@@ -186,9 +186,9 @@ class AbsensiImport implements ToModel,WithHeadingRow
                             'jml_kehadiran'   => $row['jml_kehadiran'],
                         ];
                         // dd($row,$karyawan,$jam_excel);
-                        
+
                         $formatted_jam = [];
-                        
+
                         foreach ($jam_excel as $key => $value) {
                             if (!empty($value)) {
                                 $time = Carbon::createFromFormat('H.i', $value); // Create Carbon instance from the time string
@@ -198,7 +198,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                             }
                         }
                         // dd($row,$karyawan,$jam_excel,$formatted_jam);
-            
+
                         $data = [
                             'id_karyawan'   => $karyawan->id,
                             'nik'           => $karyawan->nip ?? null,
@@ -225,7 +225,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                             'jam_kerja'     => isset($formatted_jam['jml_kehadiran']) ? $formatted_jam['jml_kehadiran'] : null,
                             // 'lemhanor'      => null,
                             // 'lemakpek'      => null,
-                            // 'lemhali'       => null,                
+                            // 'lemhali'       => null,
                         ];
                         //  dd($data);
                         $absensi = Absensi::create($data);
@@ -239,8 +239,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
                     $this->datatidakbisadiimport++;
                     $jumlahKaryawanTidakTerdaftar++;
                     $tidakbisa++;
-                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);    
-                         
+                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
+
                 }
             }
             else
@@ -250,8 +250,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
                 $tidakbisa++;
                 // dd($row,$this->datatidakbisadiimport++);
                 // dd($tidakbisa);
-                Log::info('TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);                
-                Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);                
+                Log::info('TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
+                Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);
             }
         }
         elseif($row['nik'] === NULL)
@@ -262,10 +262,10 @@ class AbsensiImport implements ToModel,WithHeadingRow
         else
         {
             // $this->datatidakbisadiimport++;
-            dd($row);
+            // dd($row);
             Log::info('NIK karyawan kosong');
         }
-       
+
     }
 
     public function import($file)
@@ -288,23 +288,22 @@ class AbsensiImport implements ToModel,WithHeadingRow
          {
              return $this->jumlahdatadiimport;
          }
-     
+
          //jumlah data yang masuk ke tabekl Tidak Masuk tanpa keterangan, sakit/ijin.
          public function getJumlahDataTidakMasuk()
          {
              return $this->jumlahDataTidakMasuk;
          }
-     
+
          //jumlah data yang diimport ke tabel tidak masuk
          public function getDataImportTidakMasuk()
          {
              return $this->jumlahimporttidakmasuk;
          }
-     
+
          public function getDatatTidakBisaDiimport()
          {
              return $this->datatidakbisadiimport;
-         } 
+         }
 }
 
-    

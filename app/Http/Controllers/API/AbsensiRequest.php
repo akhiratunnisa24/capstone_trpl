@@ -13,7 +13,7 @@ use App\Models\Absensis;
 use GuzzleHttp\Client as GuzzleClient;
 use App\Http\Controllers\Controller;
 use App\Helpers\AbsensiHelper;
- 
+
 class AbsensiRequest extends Controller
 {
 
@@ -50,7 +50,7 @@ class AbsensiRequest extends Controller
         // <ArgComKey xsi:type="xsd:integer">0</ArgComKey>
         // <Arg><PIN xsi:type="xsd:integer">All</PIN></Arg>
         // </GetAttLog>';
-        
+
         // $response = $client->post('http://hrms.test/api/absensi-response', [
         //     'headers' => $headers,
         //     'body' => $body,
@@ -75,14 +75,14 @@ class AbsensiRequest extends Controller
     {
         $results = Dummy::all()->toArray();
         $processedResults = [];
-    
+
         foreach ($results as $row) {
             $PIN = (string) $row['noid'];
             $dateTime = (string) $row['tanggal'];
             $verified = (string) $row['scan_masuk'];
             $status = (string) $row['scan_keluar'];
             $workCode = (string) $row['nama'];
-    
+
             // Menyimpan hasil pemrosesan dalam array
             $data = [
                 'PIN' => $PIN,
@@ -93,18 +93,18 @@ class AbsensiRequest extends Controller
             ];
             $processedResults[] = $data;
         }
-    
+
         // Membuat array response
         $response = [
             'GetAttLogResponse' => [
                 'Row' => $processedResults,
             ],
         ];
-    
+
         // Membuat objek SimpleXMLElement untuk XML response
         $xmlResponse = new SimpleXMLElement('<methodResponse></methodResponse>');
         $this->arrayToXml($response, $xmlResponse);
-        
+
         // Mengirim respons XML-RPC
         return response($xmlResponse->asXML(), 200, ['Content-Type' => 'text/xml']);
 
@@ -147,12 +147,12 @@ class AbsensiRequest extends Controller
                 'Content-Type' => 'application/xml'
                 ];
             // $port = 80;
-            dd($headers,$params);
+            // dd($headers,$params);
             $response = $httpClient->post("http://$IP/", [
                 'headers' => $headers,
                 'body' => $params,
-            ]);
-            dd($response);
+            // ]);
+            // dd($response);
         if ($isConnected) {
             // Koneksi berhasil terbentuk
             echo "Terhubung ke alamat IP: $IP";
@@ -198,14 +198,14 @@ class AbsensiRequest extends Controller
             //     'body' => $params,
             // ]);
             // dd($response->getHeaders(),$response->getBody()->getContents());
-            
+
             // Mendapatkan konten respons XML
             $xmlResponse = trim($response->getBody()->getContents());
             $xmlResponse = preg_replace('/[^\x{9}\x{A}\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '', $xmlResponse);
             $xmlRespons = str_replace('◀', '', $xmlResponse);
             $xmlRes = str_replace('▶', '', $xmlRespons);
 
-            dd($xmlRes);
+            // dd($xmlRes);
             // Konversi menjadi objek SimpleXMLElement
             $xmlObject = simplexml_load_string($xmlRes);
 
@@ -223,13 +223,13 @@ class AbsensiRequest extends Controller
     {
         $results = json_decode($xmlArray, true);
         $processedResults = [];
-    
+
         foreach ($results as $row) {
             $PIN = (string) $row['PIN'];
             $dateTime = (string) $row['DateTime'];
             $verified = (string) $row['Verified'];
             $status = (string) $row['Status'];
-    
+
             // Menyimpan hasil pemrosesan dalam array
             $data = [
                 'PIN' => $PIN,
@@ -240,23 +240,23 @@ class AbsensiRequest extends Controller
             ];
             $processedResults[] = $data;
         }
-    
+
         // Membuat array response
         $response = [
             'GetAttLogResponse' => [
                 'Row' => $processedResults,
             ],
         ];
-    
+
         // Membuat objek SimpleXMLElement untuk XML response
         $xmlResponse = new SimpleXMLElement('<methodResponse></methodResponse>');
         $this->arrayToXml($response, $xmlResponse);
-        
+
         // Mengirim respons XML-RPC
         return response($xmlResponse->asXML(), 200, ['Content-Type' => 'text/xml']);
 
     }
-    
+
     private function arrayToXml($data, &$xmlData)
     {
         foreach ($data as $key => $value) {
@@ -276,4 +276,3 @@ class AbsensiRequest extends Controller
 
 }
 
- 

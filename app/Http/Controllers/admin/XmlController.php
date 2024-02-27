@@ -46,14 +46,14 @@ class XmlController extends Controller
         // ]);
         $request = new XmlRpcRequest('POST',$headers,$client,$body);
         $response = $client->send($request);
-        dd($response);
+        // dd($response);
         $decodedResponse = $encoder->decode($response->value());
 
-        if ($decodedResponse->faultCode()) 
+        if ($decodedResponse->faultCode())
         {
             return null;
         }
-    
+
         return $this->xmlResponse($response);
     }
 
@@ -77,7 +77,7 @@ class XmlController extends Controller
     //         'message' => 'Berhasil terkoneksi dengan mesin absensi dan mengunduh data.',
     //         'IP' => $IP
     //     ];
-    
+
     //     return $this->xmlResponse($response);
     // }
 

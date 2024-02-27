@@ -12,9 +12,9 @@ class AbsensiClients
 
         $response = Http::withHeaders([
             'Content-Type' => 'text/xml',
-        ])->post("http://$ip", $soapRequest); 
-        
-        dd($response);
+        ])->post("http://$ip", $soapRequest);
+
+        // dd($response);
 
         if ($response->successful()) {
             $buffer = $response->body();
@@ -37,7 +37,7 @@ class AbsensiClients
             }
         }
         $xmlResponse = simplexml_load_string($hasil);
-        dd($xmlResponse);
+        // dd($xmlResponse);
     }
 
 }

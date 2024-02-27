@@ -395,13 +395,13 @@ class HomeController extends Controller
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->count();
-                dd($absenBulanini);
+                // dd($absenBulanini);
             //absen untuk owner, direksi,asisten hrd
             $absenBulanlalu = Absensi::where('partner', Auth::user()->partner)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                 ->count();
-                dd($absenBulanlalu);
+                // dd($absenBulanlalu);
             //absenTerlambatbulanlalu untuk owner,direksi, asisten hrd
             $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)

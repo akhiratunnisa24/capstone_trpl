@@ -170,7 +170,7 @@ class ListmesinController extends Controller
 
                             if (isset($matchedUser))
                             {
-                                dd($matchedUser);
+                                // dd($matchedUser);
                                 $jadwals = Jadwal::where('tanggal', $tanggal)
                                 ->where('partner', Auth::user()->partner)
                                 ->get();

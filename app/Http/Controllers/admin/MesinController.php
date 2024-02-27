@@ -41,7 +41,7 @@ class MesinController extends Controller
                     $j = $filtered_attendance->get_response(['format' => 'json']);
                     // $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
-                    dd($jArray);
+                    // dd($jArray);
 
                     $usermesin = UserMesin::where('partner',$partner)->get();
 
