@@ -75,7 +75,7 @@ class SettingController extends Controller
 
                 ]
             );
-            return redirect('settinguser')->with('status', 'Password changed successfully!');
+            return redirect('settinguser')->with('success', 'Password changed successfully!');
         }elseif($role == 1 || $role == 2 || $role == 7)
         {
             $user = User::find($id);
@@ -89,7 +89,7 @@ class SettingController extends Controller
                 ]
             );
 
-            return redirect('settinguser')->with('status', 'Password changed successfully!');
+            return redirect('settinguser')->with('success', 'Password changed successfully!');
         }
         else {
 

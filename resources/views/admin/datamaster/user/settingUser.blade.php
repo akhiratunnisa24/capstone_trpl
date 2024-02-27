@@ -90,6 +90,24 @@
         </script>
     @endif
 
+    @if(Session::has('success'))
+        <script>
+            swal("Selamat","{{ Session::get('success')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    @if(Session::has('error'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
   <script>
         function hapus_karyawan(id) {
             swal.fire({

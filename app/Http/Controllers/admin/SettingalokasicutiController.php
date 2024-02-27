@@ -47,7 +47,16 @@ class SettingalokasicutiController extends Controller
 
             //edit
             $year = Carbon::now()->format('Y');
-            $alokasiCuti = Alokasicuti::where('partner',$row->partner)->whereYear('aktif_dari',$year)->get();
+            // $alokasiCuti = Alokasicuti::where('partner',$row->partner)->whereYear('aktif_dari',$year)
+            //                 ->OrwhereYear('created_at',$year)
+            //                 ->get();
+            $alokasiCuti = Alokasicuti::where('partner', $row->partner)
+                        ->where(function($query) use ($year) {
+                            $query->whereYear('aktif_dari', $year)
+                                    ->orWhereYear('created_at', $year);
+                        })
+                        ->get();
+
             $karyawan   = Karyawan::where('partner',$row->partner)->where('status_kerja','Aktif')->where('tglkeluar', null)->get();
 
             return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row','jabatanNull','status','karyawan','alokasiCuti'));
@@ -61,7 +70,7 @@ class SettingalokasicutiController extends Controller
     {
         $year = date('Y');
 
-        if ($request->id_jeniscuti != 1)
+        if ($request->id_jeniscuti !== 1)
         {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
@@ -447,6 +456,8 @@ class SettingalokasicutiController extends Controller
                         $aktifdari = null;
                         $sampai = null;
                     }
+
+                    // dd($selisih,$keterangan,$aktifdari,$dataKaryawan);
                     $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
 
                     $alokasicuti                    = new Alokasicuti();
@@ -471,7 +482,6 @@ class SettingalokasicutiController extends Controller
                     $alokasicuti->status            = 1;
                     $alokasicuti->partner           = $settingalokasi->partner;
                     $alokasicuti->status_durasialokasi = null;
-
                     $alokasicuti->save();
                 }else{
 
@@ -498,7 +508,6 @@ class SettingalokasicutiController extends Controller
                     $alokasicuti->cutiminus        = null;
                     $alokasicuti->jmlcutibersama   = null;
                     $alokasicuti->keterangan       = null;
-
                     $alokasicuti->save();
                 }
             }

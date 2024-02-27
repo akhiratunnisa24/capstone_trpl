@@ -45,6 +45,8 @@
                                                                 ->where('id_jeniscuti', $data->id_jeniscuti)
                                                                 ->pluck('id_karyawan');
                                         $employee = $karyawan->whereNotIn('id', $alokasi);
+
+                                        // dd($alokasiCuti);
                                     @endphp
 
                                     @if($employee->isEmpty())
