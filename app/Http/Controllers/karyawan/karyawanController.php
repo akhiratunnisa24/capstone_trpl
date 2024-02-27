@@ -1834,7 +1834,6 @@ class karyawanController extends Controller
                     return view('karyawan.dashboardKaryawan', $output);
                 }elseif($role === 2)
                 {
-                    <!-- dd($absenBulanini); -->
                     $output = [
                         'row' => $row,
                         'absenKaryawan' => $absenKaryawan,
