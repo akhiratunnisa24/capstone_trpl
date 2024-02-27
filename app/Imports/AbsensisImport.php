@@ -36,16 +36,16 @@ class AbsensisImport implements ToModel,WithHeadingRow
             // dd($row['nama']);
             $this->jumlahdata++;
             $jumlahDatasudahada = 0;
-            $jumlahKaryawanTidakTerdaftar = 0; 
+            $jumlahKaryawanTidakTerdaftar = 0;
             $tidakbisa = 0;
-            
+
             $nama_map = Karyawan::whereRaw('LOWER(nama) = ?', strtolower($row['nama']))->first();
             // dd($nama_map);
             $karyawan = null;
             if($nama_map)
             {
                 $karyawan = Karyawan::where('nama', $nama_map->nama)->first();
-                dd($nama_map,$karyawan);
+                // dd($nama_map,$karyawan);
             }
 
             if ($karyawan)
@@ -61,7 +61,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
                 {
 
                     // $departement_map = Departemen::whereRaw('LOWER(nama_departemen) = ?', strtolower($row['departemen']))->first();
-                    
+
                     // dd($tanggal, $excelDate, $carbonDate,$tgl);
                     if($row['scan_masuk'] == NULL)
                     {
@@ -71,7 +71,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
                             ->select('cuti.id as id_cuti','cuti.id_karyawan','cuti.id_jeniscuti','cuti.tgl_mulai','cuti.tgl_selesai','cuti.status')
                             ->first();
                         $nama = Karyawan::where('id',$karyawan->id)->select('nama','divisi')->first();
-                        if($cuti) 
+                        if($cuti)
                         {
                             $reason = Jeniscuti::where('id',$cuti->id_jeniscuti)->select('jenis_cuti')->first();
 
@@ -99,7 +99,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
                                 ->where('status',7)
                                 ->select('izin.id','izin.id_karyawan','izin.id_jenisizin','izin.tgl_mulai','izin.tgl_selesai','izin.status')
                                 ->first();
-                                
+
                             if($izin->id_jenisizin == 3)
                             {
                                 $reason = Jenisizin::where('id',$izin->id_jenisizin)->select('jenis_izin')->first();
@@ -118,7 +118,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
                                         $tidakmasuk->save();
 
                                         $this->jumlahDataTidakMasuk++;// Increment jumlah data tidak masuk
-                                        $this->jumlahimporttidakmasuk++;     
+                                        $this->jumlahimporttidakmasuk++;
                                     }
                                 }
                             }
@@ -144,14 +144,14 @@ class AbsensisImport implements ToModel,WithHeadingRow
                                     $this->datatidakbisadiimport++;
                                     $this->tidakmasukdatabse++;
                                     $tidakbisa++;
-                                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);         
+                                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
                                     Log::info('Data tidak masuk karyawan sudah ada');
                                 }
                             }
                         }
 
                     }else
-                    {   
+                    {
                         //dd($row['jam_masuk'],$row['jam_pulang'],$row['scan_masuk'],$row['scan_keluar'], $row['plg_cpt'],$row['lembur'],$row['jam_kerja'],$row['jml_hadir']);
                         // dd($jam_masuk);
                         $jam_excel = [
@@ -164,9 +164,9 @@ class AbsensisImport implements ToModel,WithHeadingRow
                             'jam_kerja'   => $row['jam_kerja'],
                             'jml_hadir'   => $row['jml_hadir'],
                         ];
-                        
+
                         $formatted_jam = [];
-                        
+
                         foreach ($jam_excel as $key => $value) {
 
                             // if (strpos($value, ',') !== false) {
@@ -181,22 +181,22 @@ class AbsensisImport implements ToModel,WithHeadingRow
                             //     $minutes = sprintf('%02d', intval(substr($formatted_value, 3, 2))); // Mengambil dua digit menit dan memastikan format dua digit
                             //     $formatted_jam[$key] = $hours . ':' . $minutes; // Menggabungkan jam dengan menit
 
-                                
+
                             //     //hasil 0759
                             //     // Jika format nilai awal menggunakan titik desimal, misalnya "08.00"
                             //     // $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
                             //     // $hours = sprintf('%02d', intval($formatted_value)); // Mengubah jam menjadi dua digit angka
                             //     // $formatted_jam[$key] = $hours . substr($formatted_value, 2); // Menggabungkan jam dengan menit
-                                
+
                             //     //.hasil 7:59
                             //     // $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
                             //     // $formatted_jam[$key] = $formatted_value;
                             // } else {
                             //     $formatted_jam[$key] = $value;
                             // }
-                            
 
-                            // jika bentuk value nya yaitu : 08.00 maka pakai query dibawah ini: 
+
+                            // jika bentuk value nya yaitu : 08.00 maka pakai query dibawah ini:
                             $jam_decimal = floatval($value); // Konversi menjadi tipe data float
                             $jam_decimal *= 24; // Kalikan dengan 24
                             $hours = floor($jam_decimal);
@@ -204,8 +204,8 @@ class AbsensisImport implements ToModel,WithHeadingRow
                             $formatted_jam[$key] = sprintf('%02d:%02d', $hours, floor($minutes));
 
                         }
-                        
-                        $terlambat = sprintf('%02d:%02d', floor($row['terlambat'] / 60), $row['terlambat'] % 60);                   
+
+                        $terlambat = sprintf('%02d:%02d', floor($row['terlambat'] / 60), $row['terlambat'] % 60);
                         // dd($formatted_jam,$terlambat,$karyawan->id,$tgl);
                         $data = [
                             // 'no_id'         => null,
@@ -223,7 +223,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
                         ];
                         // return $data;
                         // dd($data);
-                        
+
                         // $data = [
                         //     'no_id'         => null,
                         //     'id_karyawan'   => $karyawan->id,
@@ -248,10 +248,10 @@ class AbsensisImport implements ToModel,WithHeadingRow
                      $jumlahDatasudahada = Absensis::where('id_karyawan', $karyawan->id)
                          ->where('tanggal', $tgl)
                          ->count();
- 
-                     Log::info('Jumlah id karaywan dan tanggal absensi sudah ada: '. $jumlahDatasudahada);  
+
+                     Log::info('Jumlah id karaywan dan tanggal absensi sudah ada: '. $jumlahDatasudahada);
                      $tidakbisa++;
-                     Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);         
+                     Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
                 }
             }
             else
@@ -259,8 +259,8 @@ class AbsensisImport implements ToModel,WithHeadingRow
                 $this->datatidakbisadiimport++;
                 $jumlahKaryawanTidakTerdaftar++;
                 $tidakbisa++;
-                Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);                
-                Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);                
+                Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
+                Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);
             }
         }
         else
@@ -277,19 +277,19 @@ class AbsensisImport implements ToModel,WithHeadingRow
         {
             return $this->jumlahdatadiimport;
         }
-    
+
         //jumlah data yang masuk ke tabekl Tidak Masuk tanpa keterangan, sakit/ijin.
         public function getJumlahDataTidakMasuk()
         {
             return $this->jumlahDataTidakMasuk;
         }
-    
+
         //jumlah data yang diimport ke tabel tidak masuk
         public function getDataImportTidakMasuk()
         {
             return $this->jumlahimporttidakmasuk;
         }
-    
+
         public function getDatatTidakBisaDiimport()
         {
             return $this->datatidakbisadiimport;
@@ -303,9 +303,9 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //         // dd($row['nama']);
         //         $this->jumlahdata++;
         //         $jumlahDatasudahada = 0;
-        //         $jumlahKaryawanTidakTerdaftar = 0; 
+        //         $jumlahKaryawanTidakTerdaftar = 0;
         //         $tidakbisa = 0;
-                
+
         //         //$nama_map = Karyawan::whereRaw('LOWER(nama) = ?', strtolower($row['nama']))->first();
         //         $nama_map = Karyawan::whereRaw('LOWER(nama) = ?', strtolower($row['nama']))
         //             ->where('nip', $row['nik'])
@@ -316,7 +316,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //         {
         //             $karyawan = Karyawan::where('nama', $nama_map->nama)->where('nip',$nama_map->nip)->first();
         //         }
-    
+
         //         if ($karyawan)
         //         {
         //             // dd($karyawan);
@@ -329,7 +329,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //             if($cek)
         //             {
         //                 // $departement_map = Departemen::whereRaw('LOWER(nama_departemen) = ?', strtolower($row['departemen']))->first();
-                        
+
         //                 // dd($tanggal, $excelDate, $carbonDate,$tgl);
         //                 if($row['scan_masuk'] == NULL)
         //                 {
@@ -339,10 +339,10 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                         ->select('cuti.id as id_cuti','cuti.id_karyawan','cuti.id_jeniscuti','cuti.tgl_mulai','cuti.tgl_selesai','cuti.status')
         //                         ->first();
         //                     $nama = Karyawan::where('id',$karyawan->id)->select('nama','divisi')->first();
-        //                     if($cuti) 
+        //                     if($cuti)
         //                     {
         //                         $reason = Jeniscuti::where('id',$cuti->id_jeniscuti)->select('jenis_cuti')->first();
-    
+
         //                         for($date = Carbon::parse($cuti->tgl_mulai);$date->lte(Carbon::parse($cuti->tgl_selesai)); $date->addDay())
         //                         {
         //                             $cek = Tidakmasuk::where('id_pegawai', $cuti->id_karyawan)->where('tanggal', $date->format('Y-m-d'))->first();
@@ -354,7 +354,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                                 $tidakmasuk->status     = $reason->jenis_cuti;
         //                                 $tidakmasuk->tanggal    = $date->format('Y-m-d');
         //                                 $tidakmasuk->save();
-    
+
         //                                 $this->jumlahDataTidakMasuk++; // Increment jumlah data tidak masuk
         //                                 $this->jumlahimporttidakmasuk++;
         //                             }
@@ -367,11 +367,11 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                             ->where('status',7)
         //                             ->select('izin.id','izin.id_karyawan','izin.id_jenisizin','izin.tgl_mulai','izin.tgl_selesai','izin.status')
         //                             ->first();
-                                    
+
         //                         if($izin->id_jenisizin == 3)
         //                         {
         //                             $reason = Jenisizin::where('id',$izin->id_jenisizin)->select('jenis_izin')->first();
-    
+
         //                             for($date = Carbon::parse($izin->tgl_mulai);$date->lte(Carbon::parse($izin->tgl_selesai)); $date->addDay())
         //                             {
         //                                 $cek = Tidakmasuk::where('id_pegawai', $izin->id_karyawan)->where('tanggal', $date->format('Y-m-d'))->first();
@@ -384,9 +384,9 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                                     $tidakmasuk->status     = $reason->jenis_izin;
         //                                     $tidakmasuk->tanggal    = $date->format('Y-m-d');
         //                                     $tidakmasuk->save();
-    
+
         //                                     $this->jumlahDataTidakMasuk++;// Increment jumlah data tidak masuk
-        //                                     $this->jumlahimporttidakmasuk++;     
+        //                                     $this->jumlahimporttidakmasuk++;
         //                                 }
         //                             }
         //                         }
@@ -396,7 +396,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                             if(!$cek)
         //                             {
         //                                 $nama = Karyawan::where('id',$karyawan->id)->select('nama','divisi')->first();
-    
+
         //                                 $tidakmasuk = new Tidakmasuk;
         //                                 $tidakmasuk->id_pegawai = $karyawan->id;
         //                                 $tidakmasuk->nama       = $nama->nama;
@@ -404,7 +404,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                                 $tidakmasuk->status     = 'tanpa keterangan';
         //                                 $tidakmasuk->tanggal    =  $tgl;
         //                                 $tidakmasuk->save();
-    
+
         //                                 $this->jumlahDataTidakMasuk++;
         //                                 $this->jumlahimporttidakmasuk++;
         //                             }
@@ -412,14 +412,14 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                                 $this->datatidakbisadiimport++;
         //                                 $this->tidakmasukdatabse++;
         //                                 $tidakbisa++;
-        //                                 Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);         
+        //                                 Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
         //                                 Log::info('Data tidak masuk karyawan sudah ada');
         //                             }
         //                         }
         //                     }
-    
+
         //                 }else
-        //                 {   
+        //                 {
         //                     //dd($row['jam_masuk'],$row['jam_pulang'],$row['scan_masuk'],$row['scan_keluar'], $row['plg_cpt'],$row['lembur'],$row['jam_kerja'],$row['jml_hadir']);
         //                     // dd($jam_masuk);
         //                     $jam_excel = [
@@ -432,50 +432,50 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                         'jam_kerja'   => $row['jam_kerja'],
         //                         'jml_hadir'   => $row['jml_hadir'],
         //                     ];
-                            
+
         //                     $formatted_jam = [];
-                            
+
         //                     foreach ($jam_excel as $key => $value) {
-    
+
         //                         // if (strpos($value, ',') !== false) {
         //                         //     // Jika format nilai awal menggunakan koma, misalnya "08,00"
         //                         //     $formatted_value = str_replace(',', ':', $value); // Mengganti koma menjadi titik dua (:)
         //                         //     $formatted_jam[$key] = $formatted_value;
         //                         // } elseif (strpos($value, '.') !== false) {
-    
+
         //                         //     //hasil 07:59 dari nilai 7.59 di excel 07,59
         //                         //     $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
         //                         //     $hours = sprintf('%02d', intval(substr($formatted_value, 0, 2))); // Mengambil dua digit pertama sebagai jam
         //                         //     $minutes = sprintf('%02d', intval(substr($formatted_value, 3, 2))); // Mengambil dua digit menit dan memastikan format dua digit
         //                         //     $formatted_jam[$key] = $hours . ':' . $minutes; // Menggabungkan jam dengan menit
-    
-                                    
+
+
         //                         //     //hasil 0759
         //                         //     // Jika format nilai awal menggunakan titik desimal, misalnya "08.00"
         //                         //     // $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
         //                         //     // $hours = sprintf('%02d', intval($formatted_value)); // Mengubah jam menjadi dua digit angka
         //                         //     // $formatted_jam[$key] = $hours . substr($formatted_value, 2); // Menggabungkan jam dengan menit
-                                    
+
         //                         //     //.hasil 7:59
         //                         //     // $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
         //                         //     // $formatted_jam[$key] = $formatted_value;
         //                         // } else {
         //                         //     $formatted_jam[$key] = $value;
         //                         // }
-                                
-    
-        //                         // jika bentuk value nya yaitu : 08.00 maka pakai query dibawah ini: 
+
+
+        //                         // jika bentuk value nya yaitu : 08.00 maka pakai query dibawah ini:
         //                         $jam_decimal = floatval($value); // Konversi menjadi tipe data float
         //                         $jam_decimal *= 24; // Kalikan dengan 24
         //                         $hours = floor($jam_decimal);
         //                         $minutes = round(($jam_decimal - $hours) * 60);
         //                         $formatted_jam[$key] = sprintf('%02d:%02d', $hours, floor($minutes));
-    
+
         //                     }
-                            
+
         //                     // dd($formatted_jam);
-        //                     $terlambat = sprintf('%02d:%02d', floor($row['terlambat'] / 60), $row['terlambat'] % 60);                   
-                        
+        //                     $terlambat = sprintf('%02d:%02d', floor($row['terlambat'] / 60), $row['terlambat'] % 60);
+
         //                     $data = [
         //                         'nik'           => $row['nik'],
         //                         'id_karyawan'   => $karyawan->id,
@@ -491,7 +491,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                         'jam_kerja'     => isset($formatted_jam['jml_hadir']) ? $formatted_jam['jml_hadir'] : null,
         //                     ];
         //                     // dd($data);
-                            
+
         //                     // $data = [
         //                     //     'no_id'         => null,
         //                     //     'id_karyawan'   => $karyawan->id,
@@ -516,10 +516,10 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //                  $jumlahDatasudahada = Absensis::where('id_karyawan', $karyawan->id)
         //                      ->where('tanggal', $tgl)
         //                      ->count();
-     
-        //                  Log::info('Jumlah id karaywan dan tanggal absensi sudah ada: '. $jumlahDatasudahada);  
+
+        //                  Log::info('Jumlah id karaywan dan tanggal absensi sudah ada: '. $jumlahDatasudahada);
         //                  $tidakbisa++;
-        //                  Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);         
+        //                  Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
         //             }
         //         }
         //         else
@@ -527,8 +527,8 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //             $this->datatidakbisadiimport++;
         //             $jumlahKaryawanTidakTerdaftar++;
         //             $tidakbisa++;
-        //             Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);                
-        //             Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);                
+        //             Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);
+        //             Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);
         //         }
         //     }
         //     else
@@ -536,7 +536,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
         //         Log::info('Row 1 kosong');
         //     }
         // }
-    
+
 }
 
 
