@@ -88,7 +88,7 @@
                                         </tr>
                                         <tr>
                                             <td scope="row">Masa Aktif Cuti</td>
-                                            <td id="a">{{\Carbon\Carbon::parse($data->aktif_dari)->format('d/m/Y')}} s.d {{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}}</td>
+                                            <td id="a">@if($data->aktif_dari !== null) {{\Carbon\Carbon::parse($data->aktif_dari)->format('d/m/Y')}} s.d {{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}} @else - @endif</td>
                                         </tr>
                                         <tr>
                                             <td scope="row">Status</td>

@@ -41,10 +41,10 @@
                                         @if($role == 1 || $role ==2)
                                             <th>Departemen</th>
                                             <th>Nomor ID</th>
-                                            <th>Nomor ID 2</th>
+                                            {{-- <th>Nomor ID 2</th> --}}
                                         @elseif($role == 5)
                                             <th>Nomor ID</th>
-                                            <th>Nomor ID 2</th>
+                                            {{-- <th>Nomor ID 2</th> --}}
                                             <th>Partner</th>
                                         @endif
                                         <th>Action</th>
@@ -61,7 +61,7 @@
                                                 <td>{{ $data->karyawan->departemen->nama_departemen }}</td>
                                             @endif
                                             <td>{{ $data->noid }}</td>
-                                            <td>{{ $data->noid2 }}</td>
+                                            {{-- <td>{{ $data->noid2 }}</td> --}}
                                             @if($role == 5)
                                                 <td>{{ $data->partners->nama_partner }}</td>
                                             @endif
