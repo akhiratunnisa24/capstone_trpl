@@ -24,12 +24,12 @@ class JadwalkerjaController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-
+        $year = Carbon::now()->year;
         if ($role == 1 || $role == 2)
         {
-            $year = Carbon::now()->year;
-            $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $jadwal = Jadwal::where('partner',Auth::user()->partner)->whereYear('tanggal',$year)->get();
+
+            $row     = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $jadwal  = Jadwal::where('partner',Auth::user()->partner)->whereYear('tanggal',$year)->get();
             $karyawan= Karyawan::where('partner',Auth::user()->partner)->get();
             $shift= Shift::where('partner',Auth::user()->partner)->get();
             // dd($jadwal);
@@ -40,7 +40,7 @@ class JadwalkerjaController extends Controller
         elseif(($role == 5)||$role == 7)
         {
             $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $jadwal = Jadwal::all();
+            $jadwal = Jadwal::where('partner',Auth::user()->partner)->whereYear('tanggal',$year)->get();
             $karyawan= Karyawan::all();
             $shift= Shift::all();
             $partner = Partner::all();

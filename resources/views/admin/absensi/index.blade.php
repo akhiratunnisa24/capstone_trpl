@@ -105,11 +105,9 @@
                             <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
                             <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Ekspor PDF</a>
                             @if($role == 1 || $role == 2)
-                                {{-- <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Impor Excel</a> --}}
-                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Impor CSV</a>
-                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Impor Excel</a>
-                                {{-- <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modals"> Impor Excel</a>
-                                <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smalModal"> Impor CSV</a> --}}
+                                {{-- <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Impor CSV</a>
+                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Impor Excel</a> --}}
+
                             @endif
                         </div>
                         <div class="panel-body m-b-5">

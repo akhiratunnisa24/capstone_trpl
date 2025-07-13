@@ -1,3 +1,3 @@
 <footer class="footer">
-    2022 - 2023 © R.E.M.S.
+    2025 © R.E.M.S.
 </footer>

@@ -69,7 +69,7 @@ class KaryawansController extends Controller
             ];
             return view('admin.karyawan.creates', $output);
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -276,7 +276,21 @@ class KaryawansController extends Controller
 
                 $request->session()->put('karyawan', $karyawan);
             }
-            return redirect()->route('create.dakel');
+
+            $existingKaryawan = Karyawan::where('email', $karyawan->email)
+                ->orWhere('nik', $karyawan->nik)
+                ->first();
+
+            if ($existingKaryawan)
+            {
+                return redirect()->back()->with('error', 'Email atau NIK sudah terdaftar pada sistem');
+            }
+
+            $karyawan->save();
+            $request->session()->forget('karyawan');
+
+            return redirect('/karyawan')->with('success','Data '. $karyawan->nama . ' Berhasil disimpan.');
+            // return redirect()->route('create.dakel');
         }
     }
 

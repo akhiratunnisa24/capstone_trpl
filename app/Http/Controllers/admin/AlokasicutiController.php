@@ -33,25 +33,16 @@ class AlokasicutiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
+        $year = Carbon::now()->year;
         if ($role == 1  || $role == 2) {
-
-            //index
-            // $alokasicuti = Alokasicuti::join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
-            //     ->join('jeniscuti', 'alokasicuti.id_jeniscuti', '=', 'jeniscuti.id')
-            //     ->join('departemen', 'alokasicuti.departemen', '=', 'departemen.id')
-            //     ->where('alokasicuti.status', 1)
-            //     ->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)
-            //     ->select('alokasicuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen')
-            //     ->get();
-            //$alokasicuti = Alokasicuti::where('alokasicuti.status',1)->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)->get();
             $alokasicuti = Alokasicuti::join('karyawan','alokasicuti.id_karyawan','karyawan.id')
                         ->where('alokasicuti.status',1)
                         ->where('karyawan.partner',Auth::user()->partner)
+                        ->whereRaw('YEAR(alokasicuti.aktif_dari) = ?', [$year])
                         ->get();
 
             return view('admin.alokasicuti.index', compact('alokasicuti','row'));
         } else {
-
             return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }

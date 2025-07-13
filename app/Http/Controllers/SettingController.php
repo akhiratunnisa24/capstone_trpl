@@ -139,7 +139,7 @@ class SettingController extends Controller
     }
     public function editrole(Request $request, $id)
     {
-
+        
         Role::where('id', $id)->update(
             [
                 'role' => $request->post('role'),
@@ -147,7 +147,7 @@ class SettingController extends Controller
             ]
         );
 
-        return back()->with("status", "Role changed successfully!");
+        return redirect()->back()->with('success', 'Role berhasil diubah!');
     }
     public function hapusrole($id)
     {

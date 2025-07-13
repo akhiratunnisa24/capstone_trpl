@@ -42,9 +42,9 @@
                                         <th>Nama Shift</th>
                                         <th>Jam Masuk</th>
                                         <th>Jam Pulang</th>
-                                        @if ($role == 5)
+                                        {{-- @if ($role == 5)
                                             <th>Partner</th>
-                                        @endif
+                                        @endif --}}
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -56,9 +56,9 @@
                                             <td>{{ $data->nama_shift }}</td>
                                             <td>{{ $data->jam_masuk }}</td>
                                             <td>{{ $data->jam_pulang }}</td>
-                                            @if ($role == 5)
+                                            {{-- @if ($role == 5)
                                                 <td>{{ $data->partner }}</td>
-                                            @endif
+                                            @endif --}}
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
 

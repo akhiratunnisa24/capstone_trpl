@@ -81,8 +81,8 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = karyawan::all()->sortByDesc('created_at');
 
-            $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now())->get();
-
+            // $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now())->get();
+            $posisi = [];
             $query = $request->input('query');
             $role = Auth::user()->role;
             if ($role == 5) {
@@ -3322,22 +3322,28 @@ class karyawanController extends Controller
             $atasan_kedua_nama   = $karyawan->atasan_keduab->nama;
         }
 
-        $keluarga = Keluarga::where('id_pegawai', $id)->get();
-        $kdarurat = Kdarurat::where('id_pegawai', $id)->get();
-        $rpendidikan = Rpendidikan::where('id_pegawai', $id)->get();
-        $pendidikan = Rpendidikan::where('id_pegawai', $id)->get();
-        $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->get();
+        // $keluarga = Keluarga::where('id_pegawai', $id)->get();
+        // $kdarurat = Kdarurat::where('id_pegawai', $id)->get();
+        // $rpendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+        // $pendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+        // $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->get();
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        $jumkaryawan = $keluarga->count();
+        // $jumkaryawan = $keluarga->count();
 
-        return view('karyawan.showKaryawan')->with([
+        // return view('karyawan.showKaryawan')->with([
+        //     'karyawan' => $karyawan,
+        //     'keluarga' => $keluarga,
+        //     'kdarurat' => $kdarurat,
+        //     'rpendidikan' => $rpendidikan,
+        //     'pendidikan' => $pendidikan,
+        //     'rpekerjaan' => $rpekerjaan,
+        //     'atasan_pertama_nama'=> $atasan_pertama_nama,
+        //     'atasan_kedua_nama'=>$atasan_kedua_nama,
+        //     'row' => $row
+        // ]);
+         return view('karyawan.showKaryawan')->with([
             'karyawan' => $karyawan,
-            'keluarga' => $keluarga,
-            'kdarurat' => $kdarurat,
-            'rpendidikan' => $rpendidikan,
-            'pendidikan' => $pendidikan,
-            'rpekerjaan' => $rpekerjaan,
             'atasan_pertama_nama'=> $atasan_pertama_nama,
             'atasan_kedua_nama'=>$atasan_kedua_nama,
             'row' => $row

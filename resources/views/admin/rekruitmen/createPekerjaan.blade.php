@@ -11,7 +11,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        <link rel="shortcut icon" href="{{ asset('') }}assets/images/remss.png" width="38px" height="20px">
+        <link rel="shortcut icon" href="{{ asset('') }}assets/images/rem.png" width="38px" height="20px">
 
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
@@ -467,7 +467,7 @@
 
                     // Ambil data dari objek yang sesuai dengan nomor index
                     var data = {!! json_encode($pekerjaan) !!}[nomorIndex];
-                
+
                     // Isi data ke dalam form
                     $('#namaPerusahaan').val(data.nama_perusahaan);
                     $('#alamatPerusahaan').val(data.alamat);

@@ -8,7 +8,7 @@
         <meta content="ThemeDesign" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <link rel="shortcut icon" href="assets/images/remss.png" width="38px" height="20px">
+        <link rel="shortcut icon" href="assets/images/rem.png" width="38px" height="20px">
 
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
@@ -33,7 +33,7 @@
                     @csrf
 
                     <div class="form-group">
-                            
+
                             <div class="col-xs-12">
                                 <select type="text" class="form-control  @error('role') is-invalid @enderror" name="role"  required autocomplete="role" autofocus placeholder="Role">
                                             <option value="">Pilih Role</option>
@@ -51,7 +51,7 @@
                             </div>
 
                         <div class="form-group">
-                            
+
                             <div class="col-xs-12">
                                 <select id="id_pegawai" type="text" class="form-control  @error('name') is-invalid @enderror" name="id_pegawai" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Nama">
                                         <option value="">== Pilih Karyawan ==</option>
@@ -59,7 +59,7 @@
                                         <option value="{{ $k->id }}">{{ $k->nama }}</option>
                                     @endforeach
                                 </select>
-                                
+
                                 @error('id_pegawai')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="form-group">
-                            
+
                             <div class="col-xs-12">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
                                 @error('email')
@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="form-group">
-                            
+
                             <div class="col-xs-12">
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" autofocus placeholder="Password">
 
@@ -96,13 +96,13 @@
                         </div>
 
                         <div class="form-group">
-                            
+
                             <div class="col-xs-12">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" autofocus placeholder="Confirm Password">
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="checkbox checkbox-primary">
@@ -118,7 +118,7 @@
                         <div class="form-group text-center m-t-20">
                             <div class="col-xs-12">
                                 <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Register</button>
-                                
+
                             </div>
                         </div>
 

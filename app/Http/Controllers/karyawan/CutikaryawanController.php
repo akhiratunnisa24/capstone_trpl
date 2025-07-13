@@ -211,14 +211,14 @@ class CutikaryawanController extends Controller
                     ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
                     ->first();
             }
-            $tujuan = $atasan->email;
+            // $tujuan = $atasan->email;
 
-            $partner = $emailkry->partner;
-            $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
-            if($hrdmanager !== null){
-                $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
-                $hrdmng = $hrdmng->email;
-            }
+            // $partner = $emailkry->partner;
+            // $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+            // if($hrdmanager !== null){
+            //     $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            //     $hrdmng = $hrdmng->email;
+            // }
 
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
@@ -245,34 +245,34 @@ class CutikaryawanController extends Controller
                 $data['atasan2'] = $atasan2->email;
             }
 
-            if($hrdmng !== null)
-            {
-                $data['hrdmanager'] = $hrdmng;
-            }
+            // if($hrdmng !== null)
+            // {
+            //     $data['hrdmanager'] = $hrdmng;
+            // }
 
-            $hrdstaff = User::where('partner', $partner)->where('role', 2)->first();
-            $data['hrdstaff'] = null; // Inisialisasi variabel di luar blok if
+            // $hrdstaff = User::where('partner', $partner)->where('role', 2)->first();
+            // $data['hrdstaff'] = null; // Inisialisasi variabel di luar blok if
 
-            if ($hrdstaff !== null) {
-                $hrdstf = Karyawan::where('id', $hrdstaff->id_pegawai)->first();
-                if ($hrdstf !== null) {
-                    $data['hrdstaff'] = $hrdstf->email;
-                }
-            }
+            // if ($hrdstaff !== null) {
+            //     $hrdstf = Karyawan::where('id', $hrdstaff->id_pegawai)->first();
+            //     if ($hrdstf !== null) {
+            //         $data['hrdstaff'] = $hrdstf->email;
+            //     }
+            // }
 
 
-            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-            $data['hrdstaff'] = null;
-            if($hrdstaff !== null){
-                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                $hrdst = $hrdstf->email;
-                if($hrdstf !== null)
-                {
-                    $data['hrdstaff'] = $hrdst;
-                }
-            }
+            // $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+            // $data['hrdstaff'] = null;
+            // if($hrdstaff !== null){
+            //     $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+            //     $hrdst = $hrdstf->email;
+            //     if($hrdstf !== null)
+            //     {
+            //         $data['hrdstaff'] = $hrdst;
+            //     }
+            // }
 
-            Mail::to($tujuan)->send(new CutiNotification($data));
+            // Mail::to($tujuan)->send(new CutiNotification($data));
 
             return redirect('cuti-karyawan')->with('success', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
@@ -404,7 +404,7 @@ class CutikaryawanController extends Controller
         }else{
             $DataBaru->update();
         }
-        
+
         $cuti->tgl_permohonan = $cuti->tgl_permohonan;
         $cuti->nik            = $cuti->nik;
         $cuti->id_karyawan    = $karyawan;

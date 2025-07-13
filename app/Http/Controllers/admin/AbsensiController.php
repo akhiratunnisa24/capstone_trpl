@@ -68,7 +68,8 @@ class AbsensiController extends Controller
                     ->whereYear('tanggal', $tahun)
                     ->get();
             } else {
-                $bulanSekarang = Carbon::now()->format('m');
+                // $bulanSekarang = Carbon::now()->format('m');
+                $bulanSekarang = 3;
                 $tahunSekarang = Carbon::now()->format('Y');
 
                 $absensi = Absensi::with('karyawans', 'departemens')

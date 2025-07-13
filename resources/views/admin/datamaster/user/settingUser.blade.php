@@ -37,9 +37,9 @@
                                 <th>Role</th>
                                 <th>Status Akun</th>
                                 <th>Email</th>
-                                @if(Auth::user()->role == 5)
+                                {{-- @if(Auth::user()->role == 5)
                                     <th>Partner</th>
-                                @endif
+                                @endif --}}
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -57,9 +57,9 @@
                                         @endif
                                     </td>
                                     <td>{{ $data->email }}</td>
-                                    @if(Auth::user()->role == 5)
+                                    {{-- @if(Auth::user()->role == 5)
                                         <td>{{ $data->partner }}</td>
-                                    @endif
+                                    @endif --}}
                                     {{-- <td>{{ $data->password }}</td> --}}
                                     <td>
                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">

@@ -86,7 +86,7 @@ class DepartemenController extends Controller
     public function update(Request $request, $id)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2)
+        if ($role == 1 || $role == 2 || $role == 5)
         {
             $departemen = Departemen::find($id);
             $departemen->nama_departemen = $request->nama_departemen;
@@ -100,15 +100,21 @@ class DepartemenController extends Controller
 
     public function destroy($id)
     {
-        $departemen = Departemen::find($id);
+        $role = Auth::user()->role;
+        if ($role == 1 || $role == 2 || $role == 5){
+            $departemen = Departemen::find($id);
 
-        // Cek data ke tabel "karyawan"
-        $karyawan = Karyawan::where('divisi', $departemen->id)->first();
-        if ($karyawan !== null) {
-            return redirect()->back()->with('error', 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.');
-        } else {
-            $departemen->delete();
-            return redirect()->back()->with('success', 'Data Divisi berhasil dihapus');
+            // Cek data ke tabel "karyawan"
+            $karyawan = Karyawan::where('divisi', $departemen->id)->first();
+            if ($karyawan !== null) {
+                return redirect()->back()->with('error', 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+            } else {
+                $departemen->delete();
+                return redirect()->back()->with('success', 'Data Divisi berhasil dihapus');
+            }
+        }else{
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
+
     }
 }

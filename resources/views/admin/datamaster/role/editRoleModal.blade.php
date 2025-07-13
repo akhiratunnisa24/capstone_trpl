@@ -7,7 +7,7 @@
         <div class="modal-content">
 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title text-center" id="myModalLabel">Edit User</h4>
+            <h4 class="modal-title text-center" id="myModalLabel">Edit Role</h4>
 
 
             <div class="modal-body">
@@ -21,7 +21,7 @@
                         <input  type="text" class="form-control" name="role"
                             autocomplete="off" value="{{ $data->role }}" >
                     </div>
-                    
+
                     {{-- <div class="form-group col-xs-12">
                         <label class="form-label">Status / Level</label>
                              <select type="text" class="form-control selecpicker"

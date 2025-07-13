@@ -371,7 +371,6 @@ class CutiadminController extends Controller
 
     public function storeCuti(Request $request)
     {
-        // dd($request->all());
 
         $karyawan = Karyawan::where('id',$request->id_karyawans)->first();
         $jeniscuti = Jeniscuti::where('id', $request->id_jeniscuti)->first();
@@ -437,80 +436,81 @@ class CutiadminController extends Controller
             // dd($cuti);
             $cuti->save();
 
-            $emailkry = DB::table('cuti')
-                ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
-                ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
-                ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
-                ->select('karyawan.email','karyawan.partner', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
-                ->first();
-            // dd($emailkry);
-            $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
-                ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
-                ->first();
+            // $emailkry = DB::table('cuti')
+            //     ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+            //     ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
+            //     ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
+            //     ->select('karyawan.email','karyawan.partner', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+            //     ->first();
+            // // dd($emailkry);
+            // $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
+            //     ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+            //     ->first();
 
-            $atasan2 = NULL;
-            if($emailkry->atasan_kedua != NULL)
-            {
-                $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
-                    ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
-                    ->first();
-            }
-            $tujuan = $atasan->email;
+            // $atasan2 = NULL;
+            // if($emailkry->atasan_kedua != NULL)
+            // {
+            //     $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+            //         ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+            //         ->first();
+            // }
+            // $tujuan = $atasan->email;
 
-            $partner = $emailkry->partner;
+            // $partner = $emailkry->partner;
 
-            $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
-            if($hrdmanager !== null){
-                $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
-                $hrdmng = $hrdmng->email;
-            }
+            // $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+            // if($hrdmanager !== null){
+            //     $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            //     $hrdmng = $hrdmng->email;
+            // }
 
-            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-            if($hrdstaff !== null){
-                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                $hrdstf = $hrdstf->email;
-            }
-            // dd($tujuan);
+            // $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+            // if($hrdstaff !== null){
+            //     $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+            //     $hrdstf = $hrdstf->email;
+            // }else{
+            //     $hrdstf = null;
+            // }
 
-            $data = [
-                'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
-                'noregistrasi' => $cuti->id,
-                'title'  => 'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
-                'subtitle' => '',
-                'tgl_permohonan' => Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
-                'nik' => $emailkry->nik,
-                'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-                'jabatankaryawan' => $emailkry->nama_jabatan,
-                'departemen' => $emailkry->nama_departemen,
-                'karyawan_email' =>  $emailkry->email,
-                'id_jeniscuti' => $jeniscuti->jenis_cuti,
-                'keperluan' => $cuti->keperluan,
-                'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
-                'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d/m/Y"),
-                'jml_cuti' => $cuti->jml_cuti,
-                'status' => $status->name_status,
-                'jabatan' => $atasan->jabatan,
-                'nama_atasan' => $atasan->nama,
-            ];
+            // $data = [
+            //     'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
+            //     'noregistrasi' => $cuti->id,
+            //     'title'  => 'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+            //     'subtitle' => '',
+            //     'tgl_permohonan' => Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
+            //     'nik' => $emailkry->nik,
+            //     'namakaryawan' => ucwords(strtolower($emailkry->nama)),
+            //     'jabatankaryawan' => $emailkry->nama_jabatan,
+            //     'departemen' => $emailkry->nama_departemen,
+            //     'karyawan_email' =>  $emailkry->email,
+            //     'id_jeniscuti' => $jeniscuti->jenis_cuti,
+            //     'keperluan' => $cuti->keperluan,
+            //     'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
+            //     'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d/m/Y"),
+            //     'jml_cuti' => $cuti->jml_cuti,
+            //     'status' => $status->name_status,
+            //     'jabatan' => $atasan->jabatan,
+            //     'nama_atasan' => $atasan->nama,
+            // ];
 
-            if($atasan2 !== NULL){
-                $data['atasan2'] = $atasan2->email;
-            }
+            // if($atasan2 !== NULL){
+            //     $data['atasan2'] = $atasan2->email;
+            // }
 
-            if($hrdmng !== null)
-            {
-                $data['hrdmanager'] = $hrdmng;
-            }
+            // if($hrdmng !== null)
+            // {
+            //     $data['hrdmanager'] = $hrdmng;
+            // }
 
-            if($hrdstf !== null)
-            {
-                $data['hrdstaff'] = $hrdstf;
-            }
+            // if($hrdstf !== null)
+            // {
+            //     $data['hrdstaff'] = $hrdstf;
+            // }
 
-            Mail::to($tujuan)->send(new CutiNotification($data));
+            // Mail::to($tujuan)->send(new CutiNotification($data));
             // dd($data);
 
-            return redirect()->back()->with('success', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
+            return redirect()->back()->with('success', 'Permohonan Cuti Berhasil Dibuat');
         }
     }
 

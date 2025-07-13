@@ -47,7 +47,8 @@
                                 <option>-- Pilih Shift --</option>
                                 @foreach ($shift as $data)
                                     <option value="{{ $data->id }}">
-                                        {{ $data->nama_shift }} (Partner {{ $data->partner }})
+                                        {{ $data->nama_shift }}
+                                        {{-- {{ $data->nama_shift }} (Partner {{ $data->partner }}) --}}
                                     </option>
                                 @endforeach
                             </select>

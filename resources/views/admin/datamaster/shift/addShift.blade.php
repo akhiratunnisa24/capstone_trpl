@@ -38,7 +38,7 @@
                     @if($role == 5)
                         <div class="form-group col-xs-12">
                             <label class="form-label">Partner</label>
-                            <select class="form-control" name="'partner">
+                            <select class="form-control" name="partner">
                                 <option value="">Pilih Partner</option>
                                 @foreach ($partner as $k)
                                     <option value="{{ $k->id }}">

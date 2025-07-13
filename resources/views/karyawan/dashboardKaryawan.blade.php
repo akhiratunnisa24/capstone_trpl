@@ -54,7 +54,6 @@
                                                     <th>Karyawan</th>
                                                     <th>Cuti</th>
                                                     <th>Mulai</th>
-                                                    {{-- <th>Cuti</th> --}}
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -68,10 +67,6 @@
                                                             <td>{{ $data->jenis_cuti }}</td>
                                                             <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
                                                             </td>
-                                                            {{-- <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td> --}}
-                                                            {{-- <td>{{ $data->jml_cuti }} Hari</td> --}}
-                                                            <td>
-                                                                {{-- {{ $data->status }} --}}
                                                                 <span
                                                                     class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'danger' : ($data->status == 14 ? 'warning' : ($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' : 'secondary')))))))))))) }}">
                                                                     {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ? $data->name_status : ($data->status == 5 ? $data->name_status : ($data->status == 6 ? $data->name_status : ($data->status == 7 ? $data->name_status : ($data->status == 9 ? $data->name_status : ($data->status == 10 ? $data->name_status : ($data->status == 11 ? $data->name_status : ($data->status == 12 ? $data->name_status : ($data->status == 13 ? $data->name_status : ($data->status == 14 ? $data->name_status : ($data->status == 15 ? $data->name_status : ($data->status == 16 ? $data->name_status : '')))))))))))) }}
@@ -299,7 +294,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        {{-- modal show cuti --}}
+
                                                     @endif
                                                     @include('admin.cuti.showcuti')
                                                     @include('manager.staff.cutiReject')

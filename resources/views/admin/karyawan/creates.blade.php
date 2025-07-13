@@ -371,8 +371,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    {{-- <button type="submit" id="btnsimpan" name="submit" class="btn btn-sm btn-primary">Simpan</button> --}}
-                                                    <button type="submit"  name="submit" id="btnselanjutnya" class="btn btn-sm btn-success">Simpan & Selanjutnya <i class="fa fa-forward"></i></button>
+                                                    <button type="submit" id="btnselanjutnya" name="submit" class="btn btn-sm btn-success">Simpan</button>
+                                                    {{-- <button type="submit"  name="submit" id="btnselanjutnya" class="btn btn-sm btn-success">Simpan & Selanjutnya <i class="fa fa-forward"></i></button> --}}
                                                 </div>
 
                                             </table>

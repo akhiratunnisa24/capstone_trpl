@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-sm-3">
             <div class="panel panel-primary" style="border-radius:25px">
                 <div class="panel-body">
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="col-12 col-md-12 col-lg-12">
         <div class="card" style="margin: 20px">
             <div>
@@ -152,7 +152,7 @@
         </div>
     </div>
 
-    <div class="panel panel-primary">
+    {{-- <div class="panel panel-primary">
         <div id="data-keluarga">
             <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                 <label>
@@ -183,9 +183,9 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
 
-        <div id="kontak-darurat">
+        {{-- <div id="kontak-darurat">
             <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                 <label>
                     <h4>C. KONTAK DARURAT </h4>
@@ -287,9 +287,9 @@
                 @include('karyawan.addPnformal')
                 <table class="table table-striped">
                     <thead class="alert alert-info">
-                        <tr>
+                        <tr> --}}
                             {{-- <th>No</th> --}}
-                            <th>Bidang/Jenis</th>
+                            {{-- <th>Bidang/Jenis</th>
                             <th>Lembaga Pendidikan</th>
                             <th>Tahun Mulai</th>
                             <th>Tahun Lulus</th>
@@ -334,9 +334,9 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
 
-        <div id="riwayat-pekerjaan">
+        {{-- <div id="riwayat-pekerjaan">
             <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                 <label class="" width="100%">
                     <h4>E. RIWAYAT PENGALAMAN BEKERJA</h4>
@@ -376,6 +376,6 @@
         <div class="modal-footer">
             <a href="karyawandashboard" class="btn btn-sm btn-danger">Kembali</a>
         </div>
-    </div>
+    </div> --}}
 
 @endsection

@@ -8,7 +8,7 @@
         <meta content="ThemeDesign" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <link rel="shortcut icon" href="{{ asset('') }}assets/images/remss.png" width="38px" height="20px">
+        <link rel="shortcut icon" href="{{ asset('') }}assets/images/rem.png" width="38px" height="20px">
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
         <link href="assets/css/style.css" rel="stylesheet" type="text/css">
@@ -51,8 +51,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php 
-                                            $no = 1; 
+                                            @php
+                                            $no = 1;
                                             $nomor = 1;
                                         @endphp
                                             @foreach ($pendidikan as $key => $p)
@@ -112,7 +112,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
+
                                             @foreach ($pendidikan as $key => $nf)
                                                 @if ($nf['jenis_pendidikan'] != null)
                                                     <tr>
@@ -670,7 +670,7 @@
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
                     $('#datepicker-autoclose512').val(data.tahun_masuk_formal);
                     $('#datepicker-autoclose513').val(data.tahun_lulus_formal);
-               
+
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#alamatNonformal').val(data.kota_pnonformal);

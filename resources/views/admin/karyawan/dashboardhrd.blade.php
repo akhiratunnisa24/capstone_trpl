@@ -17,12 +17,12 @@
     </div>
 
     {{-- @if (Auth::check() && $role == 1) --}}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel-group " id="accordion-test-2">
-                <div class="panel panel-default ">
+    {{-- <div class="row">
+        <div class="col-lg-6"> --}}
+            {{-- <div class="panel-group " id="accordion-test-2"> --}}
+                {{-- <div class="panel panel-default "> --}}
                     {{-- <span class="badge badge-xs badge-danger text-right">{{ $cutijumlah }}</span> --}}
-                    <div class="panel-heading ">
+                    {{-- <div class="panel-heading ">
                         <h4 class="panel-title ">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#1" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
@@ -34,8 +34,8 @@
                                 @endif
                             </a>
                         </h4>
-                    </div>
-                    <div id="1" class="panel-collapse collapse">
+                    </div> --}}
+                    {{-- <div id="1" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -131,17 +131,6 @@
                                                                         </a>
                                                                     </form>
                                                                 </div>
-                                                                {{-- <div class="col-sm-3" style="margin-left:8px">
-                                                                    <form action="{{ route('cuti.tolak', $data->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <input type="hidden" name="status" value="Ditolak"
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit"
-                                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                                    </form>
-                                                                </div> --}}
                                                             @else
                                                             @endif
 
@@ -157,7 +146,6 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                {{-- modal show cuti --}}
                                                 @include('admin.cuti.showcuti')
                                                 @include('admin.cuti.cutiReject')
                                             @empty
@@ -174,8 +162,8 @@
 
 
                     </div>
-                </div>
-                <div class="panel panel-default ">
+                </div> --}}
+                {{-- <div class="panel panel-default ">
                     <div class="panel-heading ">
                         <h4 class="panel-title ">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8"
@@ -382,7 +370,6 @@
                                                     </td>
                                                 </tr>
 
-                                                {{-- modal show cuti --}}
                                                 @include('admin.cuti.showcuti')
                                                 @include('manager.staff.cutiReject')
                                             @endforeach
@@ -395,9 +382,9 @@
 
 
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="panel panel-default">
+                {{-- <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2" class="collapsed"
@@ -424,8 +411,7 @@
                                                 <th>Karyawan</th>
                                                 <th>Izin</th>
                                                 <th>Tanggal</th>
-                                                {{-- <th>Hari</th> --}}
-                                                {{-- <th>Jam</th> --}}
+
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -446,19 +432,6 @@
                                                         </td>
                                                     @endif
 
-                                                    {{-- @if ($data->jml_hari != null)
-                                                        <td>{{ $data->jml_hari }} Hari</td>
-                                                    @else
-                                                        <td></td>
-                                                    @endif
-                                                    @if ($data->jam_mulai != null && $data->jam_mulai != null)
-                                                        <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }}
-                                                            s/d
-                                                            {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}
-                                                        </td>
-                                                    @else
-                                                        <td></td>
-                                                    @endif --}}
                                                     <td>
                                                         <span
                                                             class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'danger' : 'secondary'))))))))) }}">
@@ -468,7 +441,7 @@
 
                                                     <td>
                                                         <div class="row">
-                                                            {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
+
                                                             @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izinapproved', $data->id) }}"
@@ -524,7 +497,7 @@
                                                                     </a>
                                                                 </form>
                                                             </div>
-                                                            {{-- modal show izin --}}
+
                                                             @include('admin.cuti.showizin')
                                                             @include('admin.cuti.izinReject')
 
@@ -542,8 +515,8 @@
 
 
                     </div>
-                </div>
-
+                </div> --}}
+{{--
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -595,7 +568,7 @@
 
                                                     <td>
                                                         <div class="row">
-                                                            {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
+
                                                             <div class="row">
 
                                                                 @if (
@@ -779,7 +752,6 @@
                                                                     </a>
                                                                 </form>
                                                             </div>
-                                                            {{-- modal show izin --}}
                                                             @include('manager.staff.showIzin')
                                                             @include('manager.staff.izinReject')
                                                         </div>
@@ -887,93 +859,23 @@
                 </div>
 
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col-lg-6">
+        {{-- <div class="col-lg-6">
 
             <div class="panel-group" id="accordion-test-2">
-
-                {{-- <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#4"
-                                aria-expanded="false" class="collapsed">
-                                Data Cuti Karyawan
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="4" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr class="info">
-                                                <th>No</th>
-                                                <th>Nama Karyawan</th>
-                                                <th>Cuti Yang Didapat</th>
-                                                <th>Durasi Cuti</th>
-                                                <th>Aktif Dari</th>
-                                                <th>Berakhir</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($alokasicuti2 as $alokasi)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $alokasi->karyawans->nama }}</td>
-                                                    <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
-                                                    <td>{{ $alokasi->durasi }} hari</td>
-                                                    <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
-                                                </tr>
-                                            @endforeach
-
-                                            @php
-                                                $jml = 0;
-                                            @endphp
-                                            @foreach ($alokasicuti as $key => $alokasi)
-                                                @php
-                                                    $jml += $alokasi->durasi;
-                                                @endphp
-                                            @endforeach
-                                            <tr>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line text-right"><strong>Jumlah</strong></td>
-                                                <td class="thick-line text-left">{{ $jml }} hari</td>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
                                 aria-expanded="false">
                                 Permintaan Resign Karyawan
-                                {{-- @php
-
-                                        dd($resign);
-                                    @endphp --}}
-
-                                {{-- @if ($resign->karyawan->atasan_pertama || ($resign->karyawan->atasan_pertama = Auth::user()->id_pegawai)) --}}
 
                                 @if ($resignjumlah)
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">{{ $resignjumlah }}</span>
                                 @else
                                 @endif
-
-                                {{-- @endif --}}
 
                             </a>
                         </h4>
@@ -1000,10 +902,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $r->karyawan->nama }}</td>
                                                     <td>{{ $r->departemens->nama_departemen ?? ' ' }}</td>
-                                                    {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
-                                                    {{-- <td>{{ $r->tipe_resign }}</td> --}}
-                                                    <!-- data for status -->
                                                     <td>
                                                         <span
                                                             class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'warning' : 'danger'))) }}">
@@ -1012,7 +911,6 @@
                                                     </td>
                                                     <td id="b" class="text-center">
                                                         <div class="btn-group" role="group">
-                                                            {{-- @if ($r->status == 2 || $r->status == 4) --}}
                                                             @if ($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
                                                                 <form action="{{ route('resignapproved', $r->id) }}"
                                                                     method="POST">
@@ -1155,9 +1053,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#7"
                                     aria-expanded="false" class="collapsed">
                                     Notifikasi Terlambat
-                                    {{-- @if ($terlambat || $telat || $datatelat)
-                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jum; @endphp</span>
-                                    @endif --}}
+
                                     @if ($jum)
                                         <span class="badge badge badge-danger"
                                             style="background-color:red">@php  echo $jum; @endphp</span>
@@ -1232,7 +1128,7 @@
                     </div>
                 @endif
 
-                <div class="panel panel-default">
+                {{-- <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#5"
@@ -1253,21 +1149,21 @@
                                         <thead>
                                             <tr class="info">
                                                 <th>No</th>
-                                                <th>Lowongan</th>
+                                                <th>Lowongan</th> --}}
                                                 {{-- <th>Pelamar</th> --}}
-                                                <th>Dibutuhkan</th>
-                                                <th>Durasi Aktif</th>
+                                                {{-- <th>Dibutuhkan</th>
+                                                <th>Durasi Aktif</th> --}}
                                                 {{-- <th>Berakhir</th> --}}
-                                                <th>Aksi</th>
+                                                {{-- <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($posisi as $k)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $k->posisi }}</td>
+                                                    <td>{{ $k->posisi }}</td> --}}
                                                     {{-- <td>{{ $k->jeniscutis->jenis_cuti }}</td> --}}
-                                                    <td>{{ $k->jumlah_dibutuhkan }} Orang</td>
+                                                    {{-- <td>{{ $k->jumlah_dibutuhkan }} Orang</td>
                                                     <td>{{ \Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y') }} s.d
                                                         {{ \Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</td>
 
@@ -1281,8 +1177,8 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                </tr>
-                                            @endforeach
+                                                </tr> --}}
+                                            {{-- @endforeach
 
                                         </tbody>
                                     </table>
@@ -1290,18 +1186,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel panel-default">
+                </div> --}}
+                {{-- <div class="panel panel-default">
 
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-8" href="#15"
                                 aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Data Kehadiran Kerja Karyawan
-                                {{-- @if (isset($jumAbsen))
-                                    <span class="badge badge badge-danger"
-                                        style="background-color:red">@php  echo $jumAbsen; @endphp</span>
-                                @endif --}}
                                 @if ($jumAbsen != 0)
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">{{ $jumAbsen }}</span>
@@ -1343,8 +1235,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel panel-default">
+                </div> --}}
+                {{-- <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#11"
@@ -1440,12 +1332,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> --}}
+            {{-- </div>
         </div>
-    </div> <!-- end row -->
+    </div> <!-- end row --> --}}
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-12">
             <div class="panel-group" id="accordion-test-7">
                 <div class="panel panel-default ">
@@ -1454,10 +1346,6 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13"
                                 aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Informasi HRD
-                                {{-- @if (isset($jmlinfo))
-                                    <span class="badge badge badge-danger"
-                                        style="background-color:red">{{ $jmlinfo }}</span>
-                                @endif --}}
                                 @if ($jmlinfo != 0)
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">{{ $jmlinfo }}</span>
@@ -1492,7 +1380,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row">
         <div class="col-sm-6 col-lg-3">
@@ -1551,7 +1439,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
@@ -1590,8 +1478,8 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Row -->
-    <div class="row">
+    </div>  --}}
+    {{-- <div class="row">
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
@@ -1630,8 +1518,8 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Row -->
-    <div class="row">
+    </div> <!-- End Row --> --}}
+    {{-- <div class="row">
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
@@ -1670,8 +1558,8 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Row -->
-    <div class="row">
+    </div> <!-- End Row --> --}}
+    {{-- <div class="row">
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
@@ -1710,7 +1598,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Row -->
+    </div> <!-- End Row --> --}}
 
     <div class="row">
     </div> <!-- End Row -->
@@ -1756,7 +1644,9 @@
         </div>
     @endif
 
-
+     {{-- var tidakMasukBulanIni = {{ $tidakMasukBulanInihrd }}; --}}
+    {{-- var tidakMasukkemarin = {{ $tidakMasukKemarinhrd }} --}}
+     {{-- var tidakMasukBulanLalu = {{ $tidakMasukBulanLaluhrd }}; --}}
     <script>
         // Data absensi
         var masuk = {{ $absenHariinihrd }};
@@ -1766,17 +1656,17 @@
         var ijin = {{ $dataIzinHariinihrd }};
         var absenKemarin = {{ $jumAbsenKemarin }};
         var terlambatKemarin = {{ $absenTerlambatKemarinhrd }};
-        var tidakMasukkemarin = {{ $tidakMasukKemarinhrd }}
+
         var cutiKemarin = {{ $cutiKemarinhrd }};
         var ijinKemarin = {{ $dataIzinKemarinhrd }};
         var masukBulanini = {{ $absenBulaninihrd }};
         var terlambatBulanIni =  {{$absenTerlambatBulanInihrd }};
-        var tidakMasukBulanIni = {{ $tidakMasukBulanInihrd }};
+
         var cutiBulanIni = {{ $jumCutiBulanIni }};
         var IjinBulanIni = {{ $jumIzinBulanIni }};
         var masukBulanLalu = {{ $absenBulanLaluhrd }};
         var terlambatBulanLalu = {{ $absenTerlambatbulanlaluhrd }};
-        var tidakMasukBulanLalu = {{ $tidakMasukBulanLaluhrd }};
+
         var cutiBulanLalu = {{ $jumCutiBulanLalu }};
         var ijinBulanlalu = {{$jumIzinBulanLalu }};
 

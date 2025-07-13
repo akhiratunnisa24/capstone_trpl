@@ -171,6 +171,16 @@
                             // });
 
                             // jeniscutiSelect.selectpicker('refresh');
+                            jeniscutiSelect.append($('<option>', {
+                                value: '',
+                                text: 'Pilih Jenis Cuti',
+                                disabled: true,
+                                selected: true,
+                                'data-durasi': 0,
+                                'data-id-alokasicuti': 0,
+                                'data-id-settingalokasi': 0
+                            }));
+
                             $.each(cutiData, function(index, item) {
                                 var option = $('<option>', {
                                     value: item.id_jeniscuti,
@@ -199,6 +209,7 @@
             var durasi = $(this).find(':selected').data('durasi');
             var id_alokasicuti = $(this).find(':selected').data('id-alokasicuti');
             var id_settingalokasi = $(this).find(':selected').data('id-settingalokasi');
+            console.log(durasi, id_alokasicuti, id_settingalokasi);
 
             // Isi nilai-nilai ke dalam elemen formulir
             $('#adurasi').val(durasi);

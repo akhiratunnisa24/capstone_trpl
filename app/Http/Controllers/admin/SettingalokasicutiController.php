@@ -68,9 +68,10 @@ class SettingalokasicutiController extends Controller
 
     public function store(Request $request)
     {
+
         $year = date('Y');
 
-        if ($request->id_jeniscuti !== 1)
+        if (intval($request->id_jeniscuti) !== 1)
         {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
@@ -194,6 +195,7 @@ class SettingalokasicutiController extends Controller
                 ->where('partner', $request->partner)
                 ->whereYear('periode', '=', $year)
                 ->first();
+
             if(!$cek)
             {
                 $settingalokasi = new Settingalokasi;
